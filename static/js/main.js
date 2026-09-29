@@ -1,9 +1,13 @@
 /**
- * Modular High-End Personal Portfolio - Main Frontend Script (Part 3)
- * Dynamic category filtering, interactive spotlight engine, clipboard utilities & scroll-spy.
+ * Modular High-End Personal Portfolio - Main Frontend Script (Part 4)
+ * Asynchronous Contact API Handling, Interactive CLI Terminal Modal,
+ * Category Filtering, Live Clock, Spotlight Engine & UI Utilities.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  initContactForm();
+  initCliTerminalModal();
+  initLiveClock();
   initProjectCategoryFilter();
   initCopyRepoUrls();
   initCardSpotlightLighting();
@@ -18,8 +22,269 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /**
  * --------------------------------------------------------------------------
- * 1. DYNAMIC PROJECTS CATEGORY FILTERING (PART 3)
- * Smoothly filters project cards by category without page reloads.
+ * 1. ASYNCHRONOUS CONTACT FORM HANDLING (PART 4)
+ * Submits inquiries via fetch() to /api/contact with validation and feedback.
+ * --------------------------------------------------------------------------
+ */
+function initContactForm() {
+  const contactForm = document.getElementById("contact-form");
+  const submitBtn = document.getElementById("contact-submit-btn");
+
+  if (!contactForm || !submitBtn) return;
+
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = (document.getElementById("contact-name")?.value || "").trim();
+    const email = (document.getElementById("contact-email")?.value || "").trim();
+    const subject = (document.getElementById("contact-subject")?.value || "").trim();
+    const message = (document.getElementById("contact-message")?.value || "").trim();
+
+    // Client-side quick check
+    if (!name || !email || !subject || !message) {
+      showToast("Please fill in all required fields.");
+      return;
+    }
+
+    const emailRegex = /^[\w\.-]+@[\w\.-]+\.\w{2,}$/;
+    if (!emailRegex.test(email)) {
+      showToast("Please enter a valid email address.");
+      return;
+    }
+
+    // Set Loading State
+    const originalBtnHtml = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <i class="fa-solid fa-circle-notch fa-spin text-sm"></i>
+      <span>Transmitting Message...</span>
+    `;
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ name, email, subject, message })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        showToast(data.message || "Message transmitted successfully! Expect a reply within 24h.");
+        contactForm.reset();
+      } else {
+        showToast(data.error || "Submission error. Please try again.");
+      }
+    } catch (err) {
+      console.error("Contact Form Fetch Error:", err);
+      showToast("Network anomaly. Please contact via direct email.");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnHtml;
+    }
+  });
+}
+
+/**
+ * --------------------------------------------------------------------------
+ * 2. INTERACTIVE CLI COMMAND TERMINAL MODAL (PART 4)
+ * Key-bound (Ctrl + K) client-side interactive shell.
+ * --------------------------------------------------------------------------
+ */
+function initCliTerminalModal() {
+  const modal = document.getElementById("cli-modal");
+  const openBtns = document.querySelectorAll(".open-cli-modal-btn");
+  const closeBtn = document.getElementById("close-cli-modal-btn");
+  const cliInput = document.getElementById("cli-command-input");
+  const cliHistory = document.getElementById("cli-history-output");
+
+  if (!modal || !cliInput || !cliHistory) return;
+
+  const commandLog = [];
+  let logPointer = -1;
+
+  // Open / Close Controls
+  const openModal = () => {
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+    setTimeout(() => cliInput.focus(), 80);
+  };
+
+  const closeModal = () => {
+    modal.classList.remove("open");
+    document.body.style.overflow = "";
+    cliInput.blur();
+  };
+
+  openBtns.forEach((btn) => btn.addEventListener("click", openModal));
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+  // Close on backdrop click
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Global Keyboard Shortcuts (Ctrl + K or Cmd + K, Esc to close)
+  document.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      if (modal.classList.contains("open")) {
+        closeModal();
+      } else {
+        openModal();
+      }
+    } else if (e.key === "Escape" && modal.classList.contains("open")) {
+      closeModal();
+    }
+  });
+
+  // Available Terminal Commands
+  const commands = {
+    help: () => `
+<div class="text-indigo-300 font-semibold mb-1">Available System Commands:</div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-1 text-slate-300">
+  <div><span class="text-cyan-400 font-bold">about</span> - Background & engineering summary</div>
+  <div><span class="text-cyan-400 font-bold">projects</span> - Shipped systems & live deployments</div>
+  <div><span class="text-cyan-400 font-bold">skills</span> - Core languages & architecture stack</div>
+  <div><span class="text-cyan-400 font-bold">hackathons</span> - Major achievements & research</div>
+  <div><span class="text-cyan-400 font-bold">contact</span> - Direct communication coordinates</div>
+  <div><span class="text-cyan-400 font-bold">clear</span> - Flush terminal view output</div>
+  <div><span class="text-cyan-400 font-bold">exit</span> - Terminate CLI session & close modal</div>
+</div>`,
+
+    about: () => `
+<div class="text-slate-300 space-y-1">
+  <div class="text-white font-bold">Akash N | Full-Stack Systems Engineer & AI Developer</div>
+  <p class="text-slate-400">Location: Bengaluru, India | Status: Available for Projects & Hackathons</p>
+  <p>Passionate about low-latency distributed platforms, microservices, and glassmorphic UI architectures.</p>
+</div>`,
+
+    projects: () => `
+<div class="text-slate-300 space-y-1.5">
+  <div><span class="text-emerald-400 font-bold">• EchoRoute</span> - Urban acoustic noise-aware navigation (<a href="https://github.com/Akash04092006/echoroute" target="_blank" class="text-cyan-400 underline">GitHub</a>)</div>
+  <div><span class="text-emerald-400 font-bold">• NexusPulse</span> - 50k metrics/sec distributed telemetry engine (<a href="https://github.com/Akash04092006/nexus-pulse" target="_blank" class="text-cyan-400 underline">GitHub</a>)</div>
+  <div><span class="text-emerald-400 font-bold">• OmniScribe AI</span> - Multi-agent enterprise RAG platform (<a href="https://github.com/Akash04092006/omniscribe-ai" target="_blank" class="text-cyan-400 underline">GitHub</a>)</div>
+  <div><span class="text-emerald-400 font-bold">• AuraPay</span> - Idempotent cryptographic ledger gateway (<a href="https://github.com/Akash04092006/aurapay-ledger" target="_blank" class="text-cyan-400 underline">GitHub</a>)</div>
+</div>`,
+
+    skills: () => `
+<div class="text-slate-300 space-y-1">
+  <div><span class="text-indigo-400 font-bold">Languages:</span> Python, JavaScript (ES6+), C / C++, SQL, Go</div>
+  <div><span class="text-indigo-400 font-bold">Backend & AI:</span> Flask, FastAPI, PyTorch, LangChain, Celery, Redis</div>
+  <div><span class="text-indigo-400 font-bold">Frontend:</span> Tailwind CSS, Jinja2, HTML5 Glassmorphism, WebSockets</div>
+  <div><span class="text-indigo-400 font-bold">Cloud & DevOps:</span> Docker, Kubernetes, Vercel, Prometheus, Git</div>
+</div>`,
+
+    hackathons: () => `
+<div class="text-slate-300 space-y-1">
+  <div><span class="text-amber-400 font-bold">🏆 NITK Build for Billions</span> - Top 50 Finalist (300+ entries)</div>
+  <div><span class="text-amber-400 font-bold">⚡ TEAM ASTRA Hackathon</span> - Project Lead & Lead Architect (EchoRoute)</div>
+  <div><span class="text-amber-400 font-bold">📄 Explainable AI Paper</span> - Research published in adolescent screen addiction ML</div>
+  <div><span class="text-amber-400 font-bold">🤖 Robofiesta @ RVITM</span> - Smart agriculture & warehouse inventory prototype</div>
+</div>`,
+
+    contact: () => `
+<div class="text-slate-300 space-y-1">
+  <div><span class="text-cyan-400 font-bold">Email:</span> akashgowdan2006@gmail.com</div>
+  <div><span class="text-cyan-400 font-bold">GitHub:</span> <a href="https://github.com/Akash04092006" target="_blank" class="underline">https://github.com/Akash04092006</a></div>
+  <div><span class="text-cyan-400 font-bold">LinkedIn:</span> <a href="https://linkedin.com/in/akash-n" target="_blank" class="underline">https://linkedin.com/in/akash-n</a></div>
+  <div><span class="text-cyan-400 font-bold">WhatsApp:</span> <a href="https://wa.me/919876543210" target="_blank" class="underline">+91 98765 43210</a></div>
+</div>`,
+
+    clear: () => {
+      cliHistory.innerHTML = "";
+      return "";
+    },
+
+    exit: () => {
+      closeModal();
+      return "Session terminated.";
+    }
+  };
+
+  // Command Execution Handler
+  cliInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const rawInput = cliInput.value.trim();
+      cliInput.value = "";
+      if (!rawInput) return;
+
+      commandLog.push(rawInput);
+      logPointer = commandLog.length;
+
+      const normalized = rawInput.toLowerCase();
+      let outputHtml = "";
+
+      if (commands[normalized]) {
+        outputHtml = commands[normalized]();
+      } else {
+        outputHtml = `<span class="text-rose-400">Command not found: '${rawInput}'. Type <span class="text-cyan-300 font-bold">'help'</span> to inspect available directives.</span>`;
+      }
+
+      if (normalized !== "clear") {
+        const entry = document.createElement("div");
+        entry.className = "mb-3";
+        entry.innerHTML = `
+          <div class="flex items-center gap-2 text-xs text-slate-500 mb-1">
+            <span class="text-emerald-400 font-bold">akash@core:~$</span>
+            <span class="text-slate-200">${rawInput}</span>
+          </div>
+          <div class="pl-3 border-l-2 border-indigo-500/30 text-xs">${outputHtml}</div>
+        `;
+        cliHistory.appendChild(entry);
+        cliHistory.scrollTop = cliHistory.scrollHeight;
+      }
+    } else if (e.key === "ArrowUp") {
+      if (logPointer > 0) {
+        logPointer--;
+        cliInput.value = commandLog[logPointer] || "";
+      }
+    } else if (e.key === "ArrowDown") {
+      if (logPointer < commandLog.length - 1) {
+        logPointer++;
+        cliInput.value = commandLog[logPointer] || "";
+      } else {
+        logPointer = commandLog.length;
+        cliInput.value = "";
+      }
+    }
+  });
+}
+
+/**
+ * --------------------------------------------------------------------------
+ * 3. LIVE FOOTER CLOCK (PART 4)
+ * Displays live synchronized timestamp with IST time zone badge.
+ * --------------------------------------------------------------------------
+ */
+function initLiveClock() {
+  const clockEl = document.getElementById("footer-live-clock");
+  if (!clockEl) return;
+
+  const updateClock = () => {
+    const now = new Date();
+    // Format in IST (UTC+5:30)
+    const options = {
+      timeZone: "Asia/Kolkata",
+      hour12: true,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    };
+    const timeStr = now.toLocaleTimeString("en-US", options);
+    clockEl.textContent = `IST (UTC+5:30) • ${timeStr}`;
+  };
+
+  updateClock();
+  setInterval(updateClock, 1000);
+}
+
+/**
+ * --------------------------------------------------------------------------
+ * 4. DYNAMIC PROJECTS CATEGORY FILTERING (PART 3)
  * --------------------------------------------------------------------------
  */
 function initProjectCategoryFilter() {
@@ -31,22 +296,18 @@ function initProjectCategoryFilter() {
 
   filterTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      // 1. Update active tab styling
       filterTabs.forEach((t) => t.classList.remove("active"));
       tab.classList.add("active");
 
       const selectedFilter = tab.getAttribute("data-filter") || "all";
       let matchCount = 0;
 
-      // 2. Filter project cards with smooth animation
       projectCards.forEach((card) => {
         const cardCategory = card.getAttribute("data-category");
 
         if (selectedFilter === "all" || cardCategory === selectedFilter) {
           card.classList.remove("hidden");
-          // Re-trigger CSS keyframe animation
           card.classList.remove("project-filter-animate");
-          // Trigger DOM reflow
           void card.offsetWidth;
           card.classList.add("project-filter-animate");
           matchCount++;
@@ -56,7 +317,6 @@ function initProjectCategoryFilter() {
         }
       });
 
-      // 3. Handle empty state if no projects match
       if (emptyState) {
         if (matchCount === 0) {
           emptyState.classList.remove("hidden");
@@ -70,8 +330,7 @@ function initProjectCategoryFilter() {
 
 /**
  * --------------------------------------------------------------------------
- * 2. COPY REPOSITORY URL TO CLIPBOARD (PART 3)
- * One-click copy for GitHub repo links with toast notification.
+ * 5. COPY REPOSITORY URL TO CLIPBOARD (PART 3)
  * --------------------------------------------------------------------------
  */
 function initCopyRepoUrls() {
@@ -90,7 +349,6 @@ function initCopyRepoUrls() {
         await navigator.clipboard.writeText(repoUrl);
         showToast("Repository URL copied to clipboard!");
       } catch (err) {
-        // Fallback for clipboard API
         const textarea = document.createElement("textarea");
         textarea.value = repoUrl;
         textarea.style.position = "fixed";
@@ -112,7 +370,7 @@ function initCopyRepoUrls() {
 
 /**
  * --------------------------------------------------------------------------
- * 3. GLOBAL GLASS TOAST NOTIFICATION UTILITY
+ * 6. GLOBAL GLASS TOAST NOTIFICATION UTILITY
  * --------------------------------------------------------------------------
  */
 let toastTimeout;
@@ -139,9 +397,7 @@ function showToast(message) {
 
 /**
  * --------------------------------------------------------------------------
- * 4. INTERACTIVE CURSOR SPOTLIGHT ENGINE
- * Dynamically calculates mouse coordinates relative to card boundaries
- * and updates CSS custom properties (--mouse-x, --mouse-y) in real time.
+ * 7. INTERACTIVE CURSOR SPOTLIGHT ENGINE
  * --------------------------------------------------------------------------
  */
 function initCardSpotlightLighting() {
@@ -167,8 +423,7 @@ function initCardSpotlightLighting() {
 
 /**
  * --------------------------------------------------------------------------
- * 5. ACTIVE NAVIGATION SCROLL-SPY
- * Highlights the header navbar links based on the active viewport section.
+ * 8. ACTIVE NAVIGATION SCROLL-SPY
  * --------------------------------------------------------------------------
  */
 function initActiveNavTracking() {
@@ -189,7 +444,6 @@ function initActiveNavTracking() {
       if (entry.isIntersecting) {
         const id = entry.target.getAttribute("id");
 
-        // Update Desktop Links
         navLinks.forEach((link) => {
           const href = link.getAttribute("href");
           if (href === `#${id}`) {
@@ -201,7 +455,6 @@ function initActiveNavTracking() {
           }
         });
 
-        // Update Mobile Links
         mobileNavLinks.forEach((link) => {
           const href = link.getAttribute("href");
           if (href === `#${id}`) {
@@ -221,8 +474,7 @@ function initActiveNavTracking() {
 
 /**
  * --------------------------------------------------------------------------
- * 6. STICKY NAVBAR ELEVATION
- * Elevates navbar with intensified glass backdrop blur when scrolled.
+ * 9. STICKY NAVBAR ELEVATION
  * --------------------------------------------------------------------------
  */
 function initNavbarScroll() {
@@ -251,7 +503,7 @@ function initNavbarScroll() {
 
 /**
  * --------------------------------------------------------------------------
- * 7. MOBILE HAMBURGER MENU WITH SMOOTH BACKDROP BLUR
+ * 10. MOBILE HAMBURGER MENU
  * --------------------------------------------------------------------------
  */
 function initMobileMenu() {
@@ -303,7 +555,7 @@ function initMobileMenu() {
 
 /**
  * --------------------------------------------------------------------------
- * 8. ONE-CLICK EMAIL CLIPBOARD WITH GLASS TOAST
+ * 11. ONE-CLICK EMAIL CLIPBOARD
  * --------------------------------------------------------------------------
  */
 function initCopyEmail() {
@@ -340,7 +592,7 @@ function initCopyEmail() {
 
 /**
  * --------------------------------------------------------------------------
- * 9. FLOATING BACK-TO-TOP BUTTON
+ * 12. FLOATING BACK-TO-TOP BUTTON
  * --------------------------------------------------------------------------
  */
 function initBackToTop() {
@@ -364,7 +616,7 @@ function initBackToTop() {
 
 /**
  * --------------------------------------------------------------------------
- * 10. SMOOTH ANCHOR SCROLLING WITH OFFSET
+ * 13. SMOOTH ANCHOR SCROLLING WITH OFFSET
  * --------------------------------------------------------------------------
  */
 function initSmoothAnchorScroll() {
@@ -404,6 +656,6 @@ function printConsoleBanner() {
     "border: 1px solid #1e293b"
   ].join(";");
 
-  console.log("%c⚡ Akash N | Projects Showcase Engine Active.", styles);
-  console.log("%cGitHub: https://github.com/Akash04092006", "color: #94a3b8; font-size: 11px;");
+  console.log("%c⚡ Akash N | Glassmorphism Portfolio & Contact API Active.", styles);
+  console.log("%cPress Ctrl + K anywhere to trigger the interactive CLI shell.", "color: #a5b4fc; font-size: 11px;");
 }

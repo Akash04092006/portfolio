@@ -4,8 +4,14 @@ Designed for seamless local execution and instant serverless deployment on Verce
 """
 
 import os
+import re
+import logging
 from datetime import datetime
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+logger = logging.getLogger("portfolio")
 
 # -----------------------------------------------------------------------------
 # FLASK APP INITIALIZATION
@@ -263,58 +269,73 @@ PROJECTS = [
 
 HACKATHONS = [
     {
-        "event_name": "HackBangalore 2026",
-        "role_badge": "1st Place Winner",
+        "id": "nitk-build-for-billions",
+        "event_name": "NITK Build for Billions Hackathon",
+        "role_badge": "Selected Finalist",
         "badge_color": "bg-emerald-500/10 text-emerald-300 border-emerald-500/30",
-        "date": "February 2026",
+        "date": "January 2026",
+        "location": "NITK Surathkal, India",
+        "highlight": "Top 50 / 300+ National Teams",
         "description": (
-            "Built an offline-first emergency response mesh network leveraging edge AI and WebRTC audio synthesis. "
-            "Awarded Grand Champion among 120+ competing engineering teams."
+            "Selected in the Top 50 engineering teams out of 300+ nationwide entries. Architected a decentralized "
+            "offline-first emergency supply chain mesh network with WebSockets and edge SQLite synchronization."
         ),
-        "link": "https://devpost.com",
-        "location": "Bengaluru, India",
+        "tech_tags": ["Python", "Decentralized Mesh", "FastAPI", "WebSockets"],
+        "link": "https://github.com/Akash04092006",
         "icon": "fa-solid fa-trophy"
     },
     {
-        "event_name": "Global AI Sprint 2025",
-        "role_badge": "Best System Architecture",
-        "badge_color": "bg-indigo-500/10 text-indigo-300 border-indigo-500/30",
-        "date": "November 2025",
-        "description": (
-            "Architected an autonomous code review bot that performs AST security vulnerability scanning and automated "
-            "pull request fuzzing with self-healing benchmark tests."
-        ),
-        "link": "https://devpost.com",
-        "location": "Virtual / International",
-        "icon": "fa-solid fa-award"
-    },
-    {
-        "event_name": "FinTech Innovate Summit",
-        "role_badge": "Top 5 Finalist",
-        "badge_color": "bg-sky-500/10 text-sky-300 border-sky-500/30",
-        "date": "August 2025",
-        "description": (
-            "Prototyped a fraud prevention streaming pipeline utilizing graph neural networks for sub-50ms transaction "
-            "risk profiling across distributed banking APIs."
-        ),
-        "link": "https://devpost.com",
-        "location": "Hyderabad, India",
-        "icon": "fa-solid fa-medal"
-    },
-    {
-        "event_name": "Open Source Hackathon India",
-        "role_badge": "Community Choice Award",
-        "badge_color": "bg-amber-500/10 text-amber-300 border-amber-500/30",
-        "date": "April 2025",
-        "description": (
-            "Developed an accessible developer documentation generator with keyboard-first navigation and high-contrast "
-            "accessible syntax color engines."
-        ),
-        "link": "https://github.com",
+        "id": "team-astra-echoroute",
+        "event_name": "EchoRoute - TEAM ASTRA Hackathon",
+        "role_badge": "Team Lead",
+        "badge_color": "bg-cyan-500/10 text-cyan-300 border-cyan-500/30",
+        "date": "October 2025",
         "location": "Bengaluru, India",
-        "icon": "fa-solid fa-star"
+        "highlight": "Lead Architect & Project Lead",
+        "description": (
+            "Served as project lead and primary systems architect for EchoRoute, an acoustic telemetry and urban noise-aware "
+            "navigation platform. Coordinated a 4-person team to deliver geospatial ML path computation under 36-hour sprint constraints."
+        ),
+        "tech_tags": ["FastAPI", "PyTorch", "Graph Neural Networks", "Leaflet"],
+        "link": "https://github.com/Akash04092006/echoroute",
+        "icon": "fa-solid fa-route"
+    },
+    {
+        "id": "xai-gaming-research",
+        "event_name": "Explainable AI Gaming Addiction Research Paper",
+        "role_badge": "Research Published",
+        "badge_color": "bg-purple-500/10 text-purple-300 border-purple-500/30",
+        "date": "August 2025",
+        "location": "Peer-Reviewed Publication",
+        "highlight": "XAI Interpretability Study",
+        "description": (
+            "Authored and evaluated machine learning predictive models exploring adolescent screen behaviors and gaming vulnerability. "
+            "Applied SHAP (Shapley Additive Explanations) and LIME surrogate trees to demystify complex neural decisions for clinical practitioners."
+        ),
+        "tech_tags": ["Python", "Scikit-Learn", "SHAP", "XAI", "Pandas"],
+        "link": "https://github.com/Akash04092006",
+        "icon": "fa-solid fa-newspaper"
+    },
+    {
+        "id": "robofiesta-rvitm",
+        "event_name": "Robofiesta Hackathon @ RVITM",
+        "role_badge": "Participant",
+        "badge_color": "bg-amber-500/10 text-amber-300 border-amber-500/30",
+        "date": "March 2025",
+        "location": "RVITM Bengaluru, India",
+        "highlight": "Agri-Tech Prototype",
+        "description": (
+            "Engineered a connected smart agri-marketplace and automated warehouse inventory allocation engine. "
+            "Integrated sensor data with localized crop market analytics to optimize post-harvest storage efficiency."
+        ),
+        "tech_tags": ["IoT", "Flask", "SQLite", "Tailwind CSS"],
+        "link": "https://github.com/Akash04092006",
+        "icon": "fa-solid fa-robot"
     }
 ]
+
+# In-memory storage for logged contact submissions
+CONTACT_INQUIRIES = []
 
 # -----------------------------------------------------------------------------
 # APPLICATION ROUTES & CONTROLLERS
@@ -332,12 +353,67 @@ def index():
         current_year=datetime.now().year
     )
 
+@app.route("/api/contact", methods=["POST"])
+def contact_api():
+    """
+    Asynchronous contact endpoint handling JSON and form payloads.
+    Performs server-side validation and logs inquiries with structured timestamps.
+    """
+    # Accept both JSON payloads and standard multipart/urlencoded form data
+    if request.is_json:
+        payload = request.get_json() or {}
+    else:
+        payload = request.form.to_dict() or {}
+
+    name = payload.get("name", "").strip()
+    email = payload.get("email", "").strip()
+    subject = payload.get("subject", "").strip()
+    message = payload.get("message", "").strip()
+
+    # Server-Side Validation: Check required fields
+    if not name or not email or not subject or not message:
+        logger.warning(f"Contact submission rejected: missing required fields. Payload: {payload}")
+        return jsonify({
+            "success": False,
+            "error": "All fields (Name, Email, Subject, Message) are strictly required."
+        }), 400
+
+    # Server-Side Validation: Email format check
+    email_regex = r"^[\w\.-]+@[\w\.-]+\.\w{2,}$"
+    if not re.match(email_regex, email):
+        logger.warning(f"Contact submission rejected: invalid email format: {email}")
+        return jsonify({
+            "success": False,
+            "error": "Please provide a valid, well-formed email address."
+        }), 400
+
+    # Structured inquiry record
+    inquiry_record = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "name": name,
+        "email": email,
+        "subject": subject,
+        "message": message,
+        "ip_address": request.headers.get("X-Forwarded-For", request.remote_addr)
+    }
+
+    CONTACT_INQUIRIES.append(inquiry_record)
+    logger.info(f"Incoming Contact Inquiry [{inquiry_record['timestamp']}]: From='{name}' <{email}> Subject='{subject}'")
+
+    return jsonify({
+        "success": True,
+        "message": f"Transmission received, {name}! Your message has been routed to Akash N. Expect a response within 24 hours.",
+        "inquiry_id": f"INQ-{len(CONTACT_INQUIRIES):04d}",
+        "timestamp": inquiry_record["timestamp"]
+    }), 200
+
 @app.route("/health")
 def health_check():
     """Lightweight health check endpoint for monitoring."""
     return {
         "status": "healthy",
         "service": "portfolio-backend",
+        "inquiries_received": len(CONTACT_INQUIRIES),
         "timestamp": datetime.utcnow().isoformat()
     }, 200
 

@@ -713,3 +713,217 @@ body {
   background: rgba(99, 102, 241, 0.1);
   transform: translateY(-1px);
 }
+
+/* --------------------------------------------------------------------------
+   11. TIMELINE SPINE & MILESTONES (PART 4)
+   Vertical glowing gradient spine (cyan-to-indigo) with interactive nodes
+   -------------------------------------------------------------------------- */
+.timeline-wrapper {
+  position: relative;
+  padding: 1.5rem 0;
+}
+
+/* Central Glowing Gradient Spine */
+.timeline-spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1.25rem;
+  width: 3px;
+  background: linear-gradient(180deg, #06b6d4 0%, #6366f1 55%, #10b981 100%);
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.4), 0 0 24px rgba(99, 102, 241, 0.3);
+  border-radius: 9999px;
+}
+
+@media (min-width: 1024px) {
+  .timeline-spine {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Glowing Interactive Timeline Node */
+.timeline-node-pin {
+  position: absolute;
+  left: 1.25rem;
+  top: 2rem;
+  transform: translate(-50%, 0);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background: #090d16;
+  border: 2px solid #06b6d4;
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.6), inset 0 0 8px rgba(6, 182, 212, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 1024px) {
+  .timeline-node-pin {
+    left: 50%;
+  }
+}
+
+.timeline-item:hover .timeline-node-pin {
+  transform: translate(-50%, 0) scale(1.2);
+  border-color: #818cf8;
+  box-shadow: 0 0 24px rgba(99, 102, 241, 0.8), inset 0 0 10px rgba(99, 102, 241, 0.6);
+}
+
+/* Timeline Card Spacing */
+.timeline-card-left {
+  padding-left: 3.5rem;
+}
+
+@media (min-width: 1024px) {
+  .timeline-card-left {
+    padding-left: 0;
+    padding-right: 3.5rem;
+    text-align: right;
+  }
+}
+
+.timeline-card-right {
+  padding-left: 3.5rem;
+}
+
+@media (min-width: 1024px) {
+  .timeline-card-right {
+    padding-left: 3.5rem;
+    text-align: left;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   12. GLASS CONTACT PORTAL & FORM INPUTS (PART 4)
+   Floating glowing input fields and accessible focus rings
+   -------------------------------------------------------------------------- */
+.glass-input,
+.glass-textarea {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.875rem;
+  padding: 0.85rem 1.15rem;
+  font-size: 0.875rem;
+  color: #f8fafc;
+  outline: none;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+}
+
+.glass-input::placeholder,
+.glass-textarea::placeholder {
+  color: #64748b;
+  font-size: 0.8125rem;
+}
+
+.glass-input:focus,
+.glass-textarea:focus {
+  border-color: rgba(99, 102, 241, 0.65);
+  background: rgba(15, 23, 42, 0.85);
+  box-shadow: 
+    0 0 0 3px rgba(99, 102, 241, 0.22),
+    0 0 20px rgba(99, 102, 241, 0.3),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+   13. CLI TERMINAL MODAL OVERLAY (PART 4)
+   Interactive Command Line Terminal (Ctrl + K)
+   -------------------------------------------------------------------------- */
+.terminal-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(4, 7, 14, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.terminal-modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.terminal-modal-box {
+  width: 100%;
+  max-width: 42rem;
+  background: rgba(11, 16, 28, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: 1.25rem;
+  box-shadow: 
+    0 25px 60px -15px rgba(0, 0, 0, 0.9),
+    0 0 35px -5px rgba(99, 102, 241, 0.3),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  transform: scale(0.96) translateY(10px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.terminal-modal-backdrop.open .terminal-modal-box {
+  transform: scale(1) translateY(0);
+}
+
+.terminal-history {
+  max-height: 22rem;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.terminal-command-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #38bdf8;
+  font-family: monospace;
+  font-size: 0.875rem;
+  width: 100%;
+}
+
+/* Floating CLI Trigger Button */
+.cli-trigger-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 40;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-family: monospace;
+  color: #94a3b8;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.cli-trigger-btn:hover {
+  color: #ffffff;
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.35);
+  transform: translateY(-2px);
+}
+
