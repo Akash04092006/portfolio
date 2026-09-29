@@ -122,68 +122,142 @@ LIFESTYLE_CARDS = [
 
 PROJECTS = [
     {
-        "id": "nexus-pulse",
-        "title": "NexusPulse - Real-Time Telemetry Engine",
-        "subtitle": "Distributed Observability & Metrics Ingestion",
+        "id": "echoroute",
+        "title": "EchoRoute - Noise-Aware Navigation",
+        "category": "ai-ml",
+        "category_label": "AI & Data Science",
+        "tagline": "Acoustic telemetry and urban noise-minimized routing algorithm",
         "description": (
-            "High-throughput real-time telemetry streaming platform capable of ingesting 50,000+ metrics per second. "
-            "Equipped with dynamic anomaly detection, WebSocket live dashboards, and distributed time-series aggregation."
+            "Traditional GPS systems optimize solely for transit time, ignoring auditory pollution and urban stress. "
+            "EchoRoute processes geospatial acoustic sensor streams using graph neural networks to compute quietest "
+            "walking and cycling pathways. Deployed with sub-second path recalculation and live noise heatmaps."
         ),
-        "tags": ["Python", "Flask", "Redis", "Kafka", "Tailwind CSS", "Docker"],
-        "github_link": "https://github.com/akash-n/nexus-pulse",
+        "tech_stack": ["Python", "FastAPI", "PyTorch", "Leaflet", "Tailwind CSS", "GeoPandas"],
+        "tags": ["Python", "FastAPI", "PyTorch", "Leaflet", "Tailwind CSS", "GeoPandas"],
+        "metrics": "94% Acoustic Accuracy",
+        "metric": "94% Acoustic Accuracy",
+        "github_url": "https://github.com/Akash04092006/echoroute",
+        "github_link": "https://github.com/Akash04092006/echoroute",
+        "demo_url": "https://echoroute.vercel.app",
+        "live_link": "https://echoroute.vercel.app",
+        "featured": True,
+        "stars": "184",
+        "icon": "fa-solid fa-route"
+    },
+    {
+        "id": "nexus-pulse",
+        "title": "NexusPulse - Telemetry Engine",
+        "category": "systems",
+        "category_label": "Systems & C",
+        "tagline": "High-throughput distributed metrics ingestion and time-series aggregation",
+        "description": (
+            "Built to eliminate observability bottlenecks during high-throughput traffic spikes across microservices. "
+            "Implements a zero-copy ring buffer with Kafka pipelining and Redis memory caching to ingest over 50,000 "
+            "metrics per second. Delivers real-time anomaly alerts with sub-18ms p99 latency."
+        ),
+        "tech_stack": ["C / C++", "Python", "Kafka", "Redis", "Flask", "Docker"],
+        "tags": ["C / C++", "Python", "Kafka", "Redis", "Flask", "Docker"],
+        "metrics": "< 18ms p99 Latency",
+        "metric": "< 18ms p99 Latency",
+        "github_url": "https://github.com/Akash04092006/nexus-pulse",
+        "github_link": "https://github.com/Akash04092006/nexus-pulse",
+        "demo_url": "https://nexus-pulse.vercel.app",
         "live_link": "https://nexus-pulse.vercel.app",
         "featured": True,
         "stars": "142",
-        "metric": "< 18ms p99 Latency",
         "icon": "fa-solid fa-chart-line"
     },
     {
         "id": "omni-scribe-ai",
-        "title": "OmniScribe AI - Autonomous Document Synthesizer",
-        "subtitle": "LLM Multi-Agent Knowledge Retrieval",
+        "title": "OmniScribe AI - Document Intelligence",
+        "category": "ai-ml",
+        "category_label": "AI & Data Science",
+        "tagline": "Enterprise multi-agent RAG engine for technical document synthesis",
         "description": (
-            "Enterprise contextual intelligence platform integrating hybrid vector search with generative synthesis. "
-            "Processes complex multi-format technical documents into actionable executive summaries and queryable knowledge graphs."
+            "Solves knowledge silos in complex enterprise codebases and regulatory filings. Couples hybrid "
+            "vector-lexical search with autonomous verification agents that cross-examine retrieved citations "
+            "before synthesis. Drastically reduces hallucination rates while indexing 100k+ documents."
         ),
-        "tags": ["Python", "FastAPI", "LangChain", "Qdrant", "Next.js", "Tailwind CSS"],
-        "github_link": "https://github.com/akash-n/omniscribe-ai",
+        "tech_stack": ["Python", "LangChain", "Qdrant", "FastAPI", "Next.js", "Tailwind CSS"],
+        "tags": ["Python", "LangChain", "Qdrant", "FastAPI", "Next.js", "Tailwind CSS"],
+        "metrics": "100k+ Docs Indexed",
+        "metric": "100k+ Docs Indexed",
+        "github_url": "https://github.com/Akash04092006/omniscribe-ai",
+        "github_link": "https://github.com/Akash04092006/omniscribe-ai",
+        "demo_url": "https://omniscribe-ai.vercel.app",
         "live_link": "https://omniscribe-ai.vercel.app",
         "featured": True,
         "stars": "218",
-        "metric": "100k+ Documents Indexed",
         "icon": "fa-solid fa-brain"
     },
     {
         "id": "aurapay-ledger",
         "title": "AuraPay - Resilient Ledger Gateway",
-        "subtitle": "Cryptographic Settlement & Micro-Transactions",
+        "category": "web-dev",
+        "category_label": "Full Stack Web",
+        "tagline": "Idempotent financial settlement gateway with automated reconciliation",
         "description": (
-            "Fault-tolerant payment settlement engine built with double-entry idempotency and automated reconcile "
-            "failover. Features bank-grade end-to-end encryption and audit trail compliance."
+            "Engineered to prevent ledger drift in distributed micro-transaction ecosystems. Implements cryptographic "
+            "audit trails, strict double-entry ledgering, and Celery background workers with automatic dead-letter "
+            "queue recovery. Reconciles high-concurrency payment webhooks seamlessly."
         ),
-        "tags": ["Python", "Flask", "PostgreSQL", "Tailwind CSS", "Stripe API", "Celery"],
-        "github_link": "https://github.com/akash-n/aurapay-ledger",
+        "tech_stack": ["Python", "Flask", "PostgreSQL", "Celery", "Tailwind CSS", "Redis"],
+        "tags": ["Python", "Flask", "PostgreSQL", "Celery", "Tailwind CSS", "Redis"],
+        "metrics": "Zero Drift Reconciliation",
+        "metric": "Zero Drift Reconciliation",
+        "github_url": "https://github.com/Akash04092006/aurapay-ledger",
+        "github_link": "https://github.com/Akash04092006/aurapay-ledger",
+        "demo_url": "https://aurapay.vercel.app",
         "live_link": "https://aurapay.vercel.app",
         "featured": False,
         "stars": "89",
-        "metric": "Zero Drift Reconciliation",
         "icon": "fa-solid fa-shield-halved"
     },
     {
         "id": "cloud-vantage",
         "title": "CloudVantage - K8s Cost Optimizer",
-        "subtitle": "Cloud Infrastructure Rightsizing Daemon",
+        "category": "systems",
+        "category_label": "Systems & C",
+        "tagline": "Autonomous Kubernetes resource rightsizing daemon for cloud clusters",
         "description": (
-            "Autonomous resource rightsizing agent that monitors Kubernetes pod utilization patterns and dynamically "
-            "optimizes CPU and memory requests, reducing cloud spend by up to 34%."
+            "Overprovisioned cloud workloads inflate cloud bills by billions annually. CloudVantage continuously "
+            "monitors Prometheus pod telemetry, predicts workload peaks with time-series forecasting, and dynamically "
+            "patches CPU and memory limits, reducing compute expenditure by 34%."
         ),
-        "tags": ["Go", "Python", "Kubernetes", "Prometheus", "Helm", "GraphQL"],
-        "github_link": "https://github.com/akash-n/cloud-vantage",
+        "tech_stack": ["Go", "C", "Kubernetes", "Prometheus", "Python", "GraphQL"],
+        "tags": ["Go", "C", "Kubernetes", "Prometheus", "Python", "GraphQL"],
+        "metrics": "34% Cost Reduction",
+        "metric": "34% Cost Reduction",
+        "github_url": "https://github.com/Akash04092006/cloud-vantage",
+        "github_link": "https://github.com/Akash04092006/cloud-vantage",
+        "demo_url": "https://cloudvantage.vercel.app",
         "live_link": "https://cloudvantage.vercel.app",
         "featured": False,
         "stars": "310",
-        "metric": "34% Avg Cost Savings",
         "icon": "fa-solid fa-server"
+    },
+    {
+        "id": "devlens-profiler",
+        "title": "DevLens - Web Performance Profiler",
+        "category": "web-dev",
+        "category_label": "Full Stack Web",
+        "tagline": "Full-stack browser DOM auditing & Core Web Vitals telemetry platform",
+        "description": (
+            "Developed to automate frontend performance regression detection during continuous delivery pipelines. "
+            "Analyzes script execution bottlenecks, layout shifts, and WCAG accessibility standards in headless "
+            "browser instances with interactive glassmorphic visual timelines."
+        ),
+        "tech_stack": ["Python", "Flask", "JavaScript", "Puppeteer", "Tailwind CSS", "Chart.js"],
+        "tags": ["Python", "Flask", "JavaScript", "Puppeteer", "Tailwind CSS", "Chart.js"],
+        "metrics": "Hackathon Winner",
+        "metric": "Hackathon Winner",
+        "github_url": "https://github.com/Akash04092006/devlens-profiler",
+        "github_link": "https://github.com/Akash04092006/devlens-profiler",
+        "demo_url": "https://devlens.vercel.app",
+        "live_link": "https://devlens.vercel.app",
+        "featured": False,
+        "stars": "165",
+        "icon": "fa-solid fa-gauge-high"
     }
 ]
 

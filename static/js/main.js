@@ -1,9 +1,11 @@
 /**
- * Modular High-End Personal Portfolio - Main Frontend Script (Part 2)
- * Advanced interactive spotlight engine, scroll-spy navigation, and glass UI utilities.
+ * Modular High-End Personal Portfolio - Main Frontend Script (Part 3)
+ * Dynamic category filtering, interactive spotlight engine, clipboard utilities & scroll-spy.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  initProjectCategoryFilter();
+  initCopyRepoUrls();
   initCardSpotlightLighting();
   initActiveNavTracking();
   initNavbarScroll();
@@ -16,17 +18,137 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /**
  * --------------------------------------------------------------------------
- * 1. INTERACTIVE CURSOR SPOTLIGHT ENGINE
+ * 1. DYNAMIC PROJECTS CATEGORY FILTERING (PART 3)
+ * Smoothly filters project cards by category without page reloads.
+ * --------------------------------------------------------------------------
+ */
+function initProjectCategoryFilter() {
+  const filterTabs = document.querySelectorAll(".filter-tab");
+  const projectCards = document.querySelectorAll(".project-card");
+  const emptyState = document.getElementById("projects-empty-state");
+
+  if (!filterTabs.length || !projectCards.length) return;
+
+  filterTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      // 1. Update active tab styling
+      filterTabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      const selectedFilter = tab.getAttribute("data-filter") || "all";
+      let matchCount = 0;
+
+      // 2. Filter project cards with smooth animation
+      projectCards.forEach((card) => {
+        const cardCategory = card.getAttribute("data-category");
+
+        if (selectedFilter === "all" || cardCategory === selectedFilter) {
+          card.classList.remove("hidden");
+          // Re-trigger CSS keyframe animation
+          card.classList.remove("project-filter-animate");
+          // Trigger DOM reflow
+          void card.offsetWidth;
+          card.classList.add("project-filter-animate");
+          matchCount++;
+        } else {
+          card.classList.add("hidden");
+          card.classList.remove("project-filter-animate");
+        }
+      });
+
+      // 3. Handle empty state if no projects match
+      if (emptyState) {
+        if (matchCount === 0) {
+          emptyState.classList.remove("hidden");
+        } else {
+          emptyState.classList.add("hidden");
+        }
+      }
+    });
+  });
+}
+
+/**
+ * --------------------------------------------------------------------------
+ * 2. COPY REPOSITORY URL TO CLIPBOARD (PART 3)
+ * One-click copy for GitHub repo links with toast notification.
+ * --------------------------------------------------------------------------
+ */
+function initCopyRepoUrls() {
+  const copyRepoBtns = document.querySelectorAll(".copy-repo-btn");
+  if (!copyRepoBtns.length) return;
+
+  copyRepoBtns.forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const repoUrl = btn.getAttribute("data-repo-url");
+      if (!repoUrl) return;
+
+      try {
+        await navigator.clipboard.writeText(repoUrl);
+        showToast("Repository URL copied to clipboard!");
+      } catch (err) {
+        // Fallback for clipboard API
+        const textarea = document.createElement("textarea");
+        textarea.value = repoUrl;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try {
+          document.execCommand("copy");
+          showToast("Repository URL copied to clipboard!");
+        } catch (subErr) {
+          showToast(`Repo: ${repoUrl}`);
+        }
+        document.body.removeChild(textarea);
+      }
+    });
+  });
+}
+
+/**
+ * --------------------------------------------------------------------------
+ * 3. GLOBAL GLASS TOAST NOTIFICATION UTILITY
+ * --------------------------------------------------------------------------
+ */
+let toastTimeout;
+function showToast(message) {
+  const toast = document.getElementById("clipboard-toast");
+  if (!toast) return;
+
+  const msgEl = document.getElementById("toast-message");
+  if (msgEl) msgEl.textContent = message;
+
+  toast.classList.remove("hidden");
+  requestAnimationFrame(() => {
+    toast.classList.add("show");
+  });
+
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => {
+      toast.classList.add("hidden");
+    }, 350);
+  }, 3200);
+}
+
+/**
+ * --------------------------------------------------------------------------
+ * 4. INTERACTIVE CURSOR SPOTLIGHT ENGINE
  * Dynamically calculates mouse coordinates relative to card boundaries
  * and updates CSS custom properties (--mouse-x, --mouse-y) in real time.
  * --------------------------------------------------------------------------
  */
 function initCardSpotlightLighting() {
-  const spotlightElements = document.querySelectorAll(".card-spotlight, .glass-card");
+  const spotlightElements = document.querySelectorAll(".card-spotlight, .glass-card, .project-card");
   if (!spotlightElements.length) return;
 
   spotlightElements.forEach((card) => {
-    // Mouse movement listener
     card.addEventListener("mousemove", (e) => {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -36,7 +158,6 @@ function initCardSpotlightLighting() {
       card.style.setProperty("--mouse-y", `${y}px`);
     });
 
-    // Reset off-screen smoothly on mouse leave so radial glow fades cleanly
     card.addEventListener("mouseleave", () => {
       card.style.setProperty("--mouse-x", "-300px");
       card.style.setProperty("--mouse-y", "-300px");
@@ -46,7 +167,7 @@ function initCardSpotlightLighting() {
 
 /**
  * --------------------------------------------------------------------------
- * 2. ACTIVE NAVIGATION SCROLL-SPY
+ * 5. ACTIVE NAVIGATION SCROLL-SPY
  * Highlights the header navbar links based on the active viewport section.
  * --------------------------------------------------------------------------
  */
@@ -100,7 +221,7 @@ function initActiveNavTracking() {
 
 /**
  * --------------------------------------------------------------------------
- * 3. STICKY NAVBAR ELEVATION
+ * 6. STICKY NAVBAR ELEVATION
  * Elevates navbar with intensified glass backdrop blur when scrolled.
  * --------------------------------------------------------------------------
  */
@@ -130,7 +251,7 @@ function initNavbarScroll() {
 
 /**
  * --------------------------------------------------------------------------
- * 4. MOBILE HAMBURGER MENU WITH SMOOTH BACKDROP BLUR
+ * 7. MOBILE HAMBURGER MENU WITH SMOOTH BACKDROP BLUR
  * --------------------------------------------------------------------------
  */
 function initMobileMenu() {
@@ -147,7 +268,6 @@ function initMobileMenu() {
     menuBtn.setAttribute("aria-expanded", String(newState));
     mobileMenu.classList.toggle("hidden");
 
-    // Toggle icon state
     const icon = menuBtn.querySelector("i");
     if (icon) {
       if (newState) {
@@ -162,7 +282,6 @@ function initMobileMenu() {
 
   menuBtn.addEventListener("click", toggleMenu);
 
-  // Close menu on link click
   mobileLinks.forEach((link) => {
     link.addEventListener("click", () => {
       if (!mobileMenu.classList.contains("hidden")) {
@@ -171,7 +290,6 @@ function initMobileMenu() {
     });
   });
 
-  // Close menu on click outside
   document.addEventListener("click", (e) => {
     if (
       !mobileMenu.classList.contains("hidden") &&
@@ -185,14 +303,11 @@ function initMobileMenu() {
 
 /**
  * --------------------------------------------------------------------------
- * 5. ONE-CLICK EMAIL CLIPBOARD WITH GLASS TOAST
+ * 8. ONE-CLICK EMAIL CLIPBOARD WITH GLASS TOAST
  * --------------------------------------------------------------------------
  */
 function initCopyEmail() {
   const copyBtns = document.querySelectorAll(".copy-email-btn");
-  const toast = document.getElementById("clipboard-toast");
-  let toastTimeout;
-
   if (!copyBtns.length) return;
 
   copyBtns.forEach((btn) => {
@@ -204,7 +319,6 @@ function initCopyEmail() {
         await navigator.clipboard.writeText(email);
         showToast(`Copied to clipboard: ${email}`);
       } catch (err) {
-        // Fallback copy implementation
         const textarea = document.createElement("textarea");
         textarea.value = email;
         textarea.style.position = "fixed";
@@ -222,30 +336,11 @@ function initCopyEmail() {
       }
     });
   });
-
-  function showToast(message) {
-    if (!toast) return;
-    const msgEl = document.getElementById("toast-message");
-    if (msgEl) msgEl.textContent = message;
-
-    toast.classList.remove("hidden");
-    requestAnimationFrame(() => {
-      toast.classList.add("show");
-    });
-
-    clearTimeout(toastTimeout);
-    toastTimeout = setTimeout(() => {
-      toast.classList.remove("show");
-      setTimeout(() => {
-        toast.classList.add("hidden");
-      }, 350);
-    }, 3200);
-  }
 }
 
 /**
  * --------------------------------------------------------------------------
- * 6. FLOATING BACK-TO-TOP BUTTON
+ * 9. FLOATING BACK-TO-TOP BUTTON
  * --------------------------------------------------------------------------
  */
 function initBackToTop() {
@@ -269,7 +364,7 @@ function initBackToTop() {
 
 /**
  * --------------------------------------------------------------------------
- * 7. SMOOTH ANCHOR SCROLLING WITH OFFSET
+ * 10. SMOOTH ANCHOR SCROLLING WITH OFFSET
  * --------------------------------------------------------------------------
  */
 function initSmoothAnchorScroll() {
@@ -309,6 +404,6 @@ function printConsoleBanner() {
     "border: 1px solid #1e293b"
   ].join(";");
 
-  console.log("%c⚡ Akash N | Glassmorphic Portfolio Engine Active.", styles);
+  console.log("%c⚡ Akash N | Projects Showcase Engine Active.", styles);
   console.log("%cGitHub: https://github.com/Akash04092006", "color: #94a3b8; font-size: 11px;");
 }
