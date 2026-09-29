@@ -1,40 +1,65 @@
 /* ==========================================================================
-   MODULAR HIGH-END PERSONAL PORTFOLIO - STYLESHEET
-   Glassmorphism, Dark Mesh Gradients & Tailwind Enhancements
+   MODULAR HIGH-END PERSONAL PORTFOLIO - CSS ENGINE (PART 2)
+   Advanced Glassmorphism, Dark Mesh Gradients, Dynamic Spotlight & Accents
    ========================================================================== */
 
-/* Root Custom Properties */
+/* --------------------------------------------------------------------------
+   1. CUSTOM PROPERTIES & COLOR DESIGN SYSTEM
+   -------------------------------------------------------------------------- */
 :root {
   --bg-primary: #07090e;
-  --bg-secondary: #0d121d;
-  --glass-surface: rgba(15, 23, 42, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-border-hover: rgba(99, 102, 241, 0.4);
-  --glass-highlight: rgba(255, 255, 255, 0.12);
-  --accent-indigo: #6366f1;
+  --bg-secondary: #0c111d;
+  --bg-tertiary: #111827;
+
+  /* Frosted Glass Layers (Dark semi-transparent) */
+  --glass-surface: rgba(15, 23, 42, 0.70);
+  --glass-surface-hover: rgba(22, 32, 54, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border-hover: rgba(99, 102, 241, 0.50);
+  --glass-highlight: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+
+  /* Luminous Accent Palette */
   --accent-cyan: #06b6d4;
+  --accent-cyan-glow: rgba(6, 182, 212, 0.45);
   --accent-emerald: #10b981;
-  --accent-purple: #a855f7;
+  --accent-emerald-glow: rgba(16, 185, 129, 0.45);
+  --accent-indigo: #6366f1;
+  --accent-indigo-glow: rgba(99, 102, 241, 0.45);
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
 }
 
-/* Base Body Styles */
+/* --------------------------------------------------------------------------
+   2. GLOBAL FOUNDATIONS & ACCESSIBILITY
+   -------------------------------------------------------------------------- */
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background-color: var(--bg-primary);
-  color: #e2e8f0;
+  color: #f1f5f9;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
   position: relative;
 }
 
-/* Custom Scrollbar */
+/* Accessible Neon Focus Rings */
+:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--accent-indigo), 0 0 16px var(--accent-indigo-glow) !important;
+  border-radius: 0.5rem;
+}
+
+/* Sleek Dark Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 9px;
+  height: 9px;
 }
 
 ::-webkit-scrollbar-track {
@@ -42,22 +67,24 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.25);
+  background: rgba(99, 102, 241, 0.3);
   border-radius: 9999px;
   border: 2px solid #080b12;
+  transition: background-color 0.25s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.55);
+  background: rgba(99, 102, 241, 0.65);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
 }
 
 /* --------------------------------------------------------------------------
-   DARK MESH GRADIENT OVERLAYS
+   3. KEYFRAME-ANIMATED AMBIENT MESH GRADIENT SPHERES
+   Floating in background with soft color pulses: Cyan, Emerald, Indigo
    -------------------------------------------------------------------------- */
 .mesh-gradient-container {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
   z-index: -1;
@@ -68,103 +95,129 @@ body {
 .mesh-sphere {
   position: absolute;
   border-radius: 50%;
-  filter: blur(110px);
-  opacity: 0.38;
+  filter: blur(120px);
+  -webkit-filter: blur(120px);
+  opacity: 0.42;
   mix-blend-mode: screen;
-  animation: floatOrb 22s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+  animation: floatOrb 20s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
-.mesh-sphere-1 {
+/* Indigo Pulse Sphere (Top Left) */
+.mesh-sphere-1,
+.mesh-sphere-indigo {
+  width: 650px;
+  height: 650px;
+  top: -12%;
+  left: 5%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.65) 0%, rgba(79, 70, 229, 0.35) 45%, rgba(99, 102, 241, 0) 72%);
+  animation-duration: 22s;
+}
+
+/* Cyan Pulse Sphere (Center Right) */
+.mesh-sphere-2,
+.mesh-sphere-cyan {
+  width: 720px;
+  height: 720px;
+  top: 30%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.55) 0%, rgba(14, 165, 233, 0.3) 48%, rgba(6, 182, 212, 0) 70%);
+  animation-duration: 26s;
+  animation-direction: alternate-reverse;
+  animation-delay: -5s;
+}
+
+/* Emerald Pulse Sphere (Bottom Left / Center) */
+.mesh-sphere-3,
+.mesh-sphere-emerald {
   width: 600px;
   height: 600px;
-  top: -15%;
-  left: 10%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.6) 0%, rgba(99, 102, 241, 0) 70%);
-}
-
-.mesh-sphere-2 {
-  width: 700px;
-  height: 700px;
-  top: 35%;
-  right: -10%;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(168, 85, 247, 0) 70%);
-  animation-duration: 28s;
-  animation-direction: alternate-reverse;
-}
-
-.mesh-sphere-3 {
-  width: 550px;
-  height: 550px;
   bottom: -10%;
-  left: 20%;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, rgba(6, 182, 212, 0) 70%);
+  left: 25%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.5) 0%, rgba(20, 184, 166, 0.28) 45%, rgba(16, 185, 129, 0) 70%);
   animation-duration: 24s;
+  animation-delay: -10s;
 }
 
+/* Subtle Geometric Dark Grid Mask */
 .mesh-grid-pattern {
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 50px 50px;
-  mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%);
-  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%);
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 82%);
+  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 82%);
 }
 
 @keyframes floatOrb {
   0% {
-    transform: translate(0px, 0px) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.38;
   }
-  50% {
-    transform: translate(45px, -35px) scale(1.08);
+  33% {
+    transform: translate3d(55px, -40px, 0) scale(1.08);
+    opacity: 0.52;
+  }
+  66% {
+    transform: translate3d(-35px, 45px, 0) scale(0.94);
+    opacity: 0.40;
   }
   100% {
-    transform: translate(-30px, 40px) scale(0.95);
+    transform: translate3d(40px, 20px, 0) scale(1.04);
+    opacity: 0.48;
   }
 }
 
 /* --------------------------------------------------------------------------
-   GLASSMORPHISM DESIGN UTILITIES
+   4. ADVANCED GLASSMORPHIC UI COMPONENTS
+   Hardware-accelerated blur, luminous borders & inner highlight shadows
    -------------------------------------------------------------------------- */
 .glass-panel {
   background: var(--glass-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   box-shadow: 
-    0 10px 30px -10px rgba(0, 0, 0, 0.6),
+    var(--glass-shadow),
     inset 0 1px 0 0 var(--glass-highlight);
+  border-radius: 1.5rem;
 }
 
 .glass-nav {
-  background: rgba(9, 13, 22, 0.75);
+  background: rgba(9, 13, 24, 0.72);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.6);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-nav.scrolled {
-  background: rgba(7, 10, 17, 0.92);
-  border-bottom-color: rgba(99, 102, 241, 0.2);
+  background: rgba(7, 10, 18, 0.92);
+  border-bottom-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.75), 0 0 15px rgba(99, 102, 241, 0.15);
 }
 
+/* Core Glass Card with Elevation & Border Illumination */
 .glass-card {
   position: relative;
-  background: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--glass-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
   border-radius: 1.25rem;
   box-shadow: 
-    0 10px 30px -10px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    var(--glass-shadow),
+    inset 0 1px 0 0 var(--glass-highlight);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
 
+/* Luminous Top Crest Sheen */
 .glass-card::before {
   content: "";
   position: absolute;
@@ -172,47 +225,204 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  opacity: 0.65;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 2;
 }
 
+/* Card Hover Elevation and Glow */
 .glass-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(99, 102, 241, 0.35);
+  border-color: var(--glass-border-hover);
   box-shadow: 
-    0 22px 45px -12px rgba(0, 0, 0, 0.7),
-    0 0 25px -5px rgba(99, 102, 241, 0.25),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
+    0 24px 48px -12px rgba(0, 0, 0, 0.75),
+    0 0 25px -4px rgba(99, 102, 241, 0.3),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
 }
 
 .glass-card:hover::before {
   opacity: 1;
 }
 
-.glass-button-primary {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.9) 0%, rgba(79, 70, 229, 0.95) 100%);
-  border: 1px solid rgba(165, 180, 252, 0.3);
+/* --------------------------------------------------------------------------
+   5. INTERACTIVE CURSOR SPOTLIGHT ENGINE
+   Calculates coordinates dynamically via JavaScript: --mouse-x and --mouse-y
+   -------------------------------------------------------------------------- */
+.card-spotlight {
+  position: relative;
+}
+
+.card-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    550px circle at var(--mouse-x, -200px) var(--mouse-y, -200px),
+    rgba(99, 102, 241, 0.12),
+    rgba(6, 182, 212, 0.06) 35%,
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Specific Spotlight Accents for Lifestyle Cards */
+.card-spotlight-amber:hover::after {
+  background: radial-gradient(
+    500px circle at var(--mouse-x, -200px) var(--mouse-y, -200px),
+    rgba(245, 158, 11, 0.14),
+    rgba(249, 115, 22, 0.06) 35%,
+    transparent 65%
+  );
+}
+
+.card-spotlight-rose:hover::after {
+  background: radial-gradient(
+    500px circle at var(--mouse-x, -200px) var(--mouse-y, -200px),
+    rgba(244, 63, 94, 0.14),
+    rgba(225, 29, 72, 0.06) 35%,
+    transparent 65%
+  );
+}
+
+.card-spotlight-sky:hover::after {
+  background: radial-gradient(
+    500px circle at var(--mouse-x, -200px) var(--mouse-y, -200px),
+    rgba(14, 165, 233, 0.14),
+    rgba(99, 102, 241, 0.06) 35%,
+    transparent 65%
+  );
+}
+
+.card-spotlight-emerald:hover::after {
+  background: radial-gradient(
+    500px circle at var(--mouse-x, -200px) var(--mouse-y, -200px),
+    rgba(16, 185, 129, 0.14),
+    rgba(20, 184, 166, 0.06) 35%,
+    transparent 65%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   6. FLOATING SOCIAL CONNECTIVITY DOCK
+   Floating dock pill with luminous icon links and hover reflections
+   -------------------------------------------------------------------------- */
+.glass-dock {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
   box-shadow: 
-    0 4px 18px 0 rgba(99, 102, 241, 0.35),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
-  transition: all 0.25s ease;
+    0 16px 36px -8px rgba(0, 0, 0, 0.65),
+    0 0 20px -5px rgba(99, 102, 241, 0.2),
+    inset 0 1px 0 0 var(--glass-highlight);
+  border-radius: 9999px;
+  padding: 0.5rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-dock:hover {
+  border-color: rgba(99, 102, 241, 0.45);
+  box-shadow: 
+    0 20px 40px -8px rgba(0, 0, 0, 0.75),
+    0 0 28px -4px rgba(99, 102, 241, 0.35),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+
+.dock-icon-btn {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  font-size: 1.1rem;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dock-icon-btn:hover {
+  transform: translateY(-4px) scale(1.12);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+}
+
+.dock-icon-github:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+.dock-icon-linkedin:hover {
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.45);
+  color: #38bdf8;
+}
+
+.dock-icon-instagram:hover {
+  border-color: rgba(244, 63, 94, 0.6);
+  box-shadow: 0 0 18px rgba(244, 63, 94, 0.45);
+  color: #f43f5e;
+}
+
+.dock-icon-whatsapp:hover {
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.45);
+  color: #10b981;
+}
+
+.dock-icon-email:hover {
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 0 18px rgba(99, 102, 241, 0.45);
+  color: #818cf8;
+}
+
+/* --------------------------------------------------------------------------
+   7. BUTTONS, PILLS & INTERACTIVE SURFACES
+   -------------------------------------------------------------------------- */
+.glass-button-primary {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.95) 0%, rgba(79, 70, 229, 0.98) 100%);
+  border: 1px solid rgba(165, 180, 252, 0.35);
+  box-shadow: 
+    0 4px 20px 0 rgba(99, 102, 241, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-button-primary:hover {
   transform: translateY(-2px);
   background: linear-gradient(135deg, rgba(129, 140, 248, 1) 0%, rgba(99, 102, 241, 1) 100%);
+  border-color: rgba(199, 210, 254, 0.6);
   box-shadow: 
-    0 8px 24px 0 rgba(99, 102, 241, 0.5),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+    0 10px 28px 0 rgba(99, 102, 241, 0.55),
+    0 0 18px rgba(99, 102, 241, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.45);
 }
 
 .glass-button-secondary {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(10px);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
-  transition: all 0.25s ease;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-button-secondary:hover {
@@ -220,39 +430,65 @@ body {
   border-color: rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
   box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
 }
 
 .glass-pill {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
 }
 
 /* --------------------------------------------------------------------------
-   TEXT GRADIENTS & ACCENTS
+   8. HIGH-CONTRAST DARK MODE TYPOGRAPHY GRADIENTS
    -------------------------------------------------------------------------- */
-.text-gradient-main {
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+.text-gradient-hero {
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 40%, #cbd5e1 75%, #94a3b8 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-brand {
-  background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 35%, #38bdf8 70%, #34d399 100%);
+  background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 30%, #38bdf8 65%, #34d399 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-fire {
-  background: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #ef4444 100%);
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #67e8f9 0%, #06b6d4 50%, #0284c7 100%);
   -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #6ee7b7 0%, #10b981 50%, #059669 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-amber {
+  background: linear-gradient(135deg, #fde68a 0%, #f59e0b 50%, #d97706 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-rose {
+  background: linear-gradient(135deg, #fda4af 0%, #f43f5e 50%, #e11d48 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* --------------------------------------------------------------------------
-   STATUS PULSES & MICRO-INTERACTIONS
+   9. STATUS PULSE BEACON & TOAST NOTIFICATION
    -------------------------------------------------------------------------- */
 .pulse-beacon {
   position: relative;
@@ -271,43 +507,35 @@ body {
 
 @keyframes beaconPing {
   75%, 100% {
-    transform: scale(2.2);
+    transform: scale(2.4);
     opacity: 0;
   }
 }
 
-/* Card Spotlight Follower */
-.card-spotlight {
-  position: relative;
+/* Accent Glow Line */
+.accent-glow-line {
+  height: 2px;
+  width: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
 }
 
-.card-spotlight::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
-    rgba(99, 102, 241, 0.08),
-    transparent 40%
-  );
+.glass-card:hover .accent-glow-line {
+  opacity: 0.9;
+}
+
+/* Toast Notice */
+.toast-notice {
+  transform: translate(-50%, 120%);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
 }
 
-.card-spotlight:hover::after {
-  opacity: 1;
-}
-
-/* Toast Notification Animation */
-.toast-notice {
-  transform: translateY(120%);
-  opacity: 0;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
 .toast-notice.show {
-  transform: translateY(0);
+  transform: translate(-50%, 0);
   opacity: 1;
+  pointer-events: auto;
 }

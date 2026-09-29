@@ -34,15 +34,16 @@ PERSONAL_INFO = {
         "athletic discipline, and continuous iteration."
     ),
     "location": "Bengaluru, India",
-    "availability": "Available for High-Impact Roles & Collaborations",
-    "status_indicator": "Active / Open to Work",
+    "availability": "Available for Projects & Hackathons",
+    "status_indicator": "Available for Projects & Hackathons",
     "email": "akashgowdan2006@gmail.com",
     "phone": "+91 98765 43210",
     "social": {
-        "github": "https://github.com/akash-n",
+        "github": "https://github.com/Akash04092006",
         "linkedin": "https://linkedin.com/in/akash-n",
         "instagram": "https://instagram.com/akash_n",
         "twitter": "https://x.com/akash_n",
+        "whatsapp": "https://wa.me/919876543210",
     },
     "quick_stats": [
         {"label": "Years Experience", "value": "3+"},

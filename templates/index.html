@@ -6,53 +6,92 @@
 <div class="relative overflow-hidden">
 
   <!-- ========================================================================
-       HERO SECTION: Identity, Role, Value Proposition & Terminal
+       1. HERO SECTION & FLOATING SOCIAL CONNECTIVITY DOCK
+       High-converting headline, availability badge, glass dock, and terminal
        ======================================================================== -->
-  <section id="about" class="relative pt-16 sm:pt-24 pb-20 px-4 sm:px-8 max-w-7xl mx-auto">
+  <section id="about" class="relative pt-12 sm:pt-20 pb-20 px-4 sm:px-8 max-w-7xl mx-auto">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
       
-      <!-- Left Column: Copy & Actions -->
+      <!-- Left Column: Copy, Availability Badge, CTAs & Floating Social Dock -->
       <div class="lg:col-span-7 space-y-6 sm:space-y-8">
         
-        <!-- Status Pill -->
-        <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full glass-pill text-xs font-medium text-slate-300 border border-indigo-500/30">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-beacon"></span>
-          <span>{{ personal_info.availability }}</span>
+        <!-- Animated Availability Indicator Pill -->
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-pill text-xs font-semibold text-slate-200 border border-emerald-500/30 shadow-lg shadow-emerald-500/10">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-beacon"></span>
+          <span>Available for Projects & Hackathons</span>
         </div>
 
-        <!-- Headline -->
+        <!-- Headline & Name Branding -->
         <div class="space-y-3">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white leading-[1.12]">
-            Hi, I'm <span class="text-gradient-brand">{{ personal_info.name }}</span>.<br>
-            <span class="text-slate-200 text-3xl sm:text-4xl lg:text-5xl font-bold">I build resilient systems & intelligent software.</span>
+          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight text-white leading-[1.08]">
+            Hi, I'm <span class="text-gradient-brand">Akash N</span>.<br>
+            <span class="block text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-200 mt-2">
+              Full-Stack Engineer & AI Systems Developer
+            </span>
           </h1>
-          <p class="text-base sm:text-lg text-slate-400 font-normal max-w-2xl leading-relaxed pt-2">
-            {{ personal_info.tagline }}
+          <p class="text-base sm:text-lg text-slate-300 font-normal max-w-2xl leading-relaxed pt-2">
+            Architecting scalable web platforms, high-performance backends, and elegant human-centric digital experiences with deep engineering curiosity and athletic discipline.
           </p>
         </div>
 
-        <!-- CTAs & Action Buttons -->
-        <div class="flex flex-wrap items-center gap-4 pt-2">
-          <a href="#projects" class="glass-button-primary px-6 py-3.5 rounded-xl font-semibold text-sm text-white inline-flex items-center gap-2.5 shadow-lg shadow-indigo-500/25">
-            <span>Explore Engineering Work</span>
+        <!-- High-Contrast Action CTAs -->
+        <div class="flex flex-wrap items-center gap-4 pt-1">
+          <a href="#projects" class="glass-button-primary px-6 py-3.5 rounded-xl font-semibold text-sm text-white inline-flex items-center gap-2.5 shadow-xl shadow-indigo-500/25">
+            <span>Explore Projects</span>
             <i class="fa-solid fa-arrow-down text-xs"></i>
           </a>
 
-          <button data-email="{{ personal_info.email }}" class="copy-email-btn glass-button-secondary px-5 py-3.5 rounded-xl font-medium text-sm text-slate-200 hover:text-white inline-flex items-center gap-2.5 cursor-pointer">
-            <i class="fa-regular fa-copy text-indigo-400"></i>
-            <span>Copy Email</span>
-          </button>
-
-          <a href="{{ personal_info.social.github }}" target="_blank" rel="noopener noreferrer" class="glass-button-secondary px-4 py-3.5 rounded-xl text-slate-300 hover:text-white inline-flex items-center justify-center" aria-label="GitHub Profile">
-            <i class="fa-brands fa-github text-lg"></i>
+          <a href="#contact" class="glass-button-secondary px-6 py-3.5 rounded-xl font-medium text-sm text-slate-200 hover:text-white inline-flex items-center gap-2.5">
+            <i class="fa-regular fa-paper-plane text-indigo-400"></i>
+            <span>Get in Touch</span>
           </a>
+
+          <button data-email="{{ personal_info.email }}" class="copy-email-btn glass-button-secondary px-4 py-3.5 rounded-xl text-slate-300 hover:text-white inline-flex items-center gap-2 cursor-pointer" title="Copy Email to Clipboard">
+            <i class="fa-regular fa-copy text-indigo-400"></i>
+            <span class="text-xs font-semibold">Copy Email</span>
+          </button>
         </div>
 
-        <!-- Quick Stats Grid -->
+        <!-- Floating Glass Social Connectivity Dock -->
+        <div class="pt-4">
+          <div class="text-xs font-mono tracking-wider uppercase text-slate-400 mb-2.5 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+            <span>Direct Connectivity Dock</span>
+          </div>
+
+          <div class="glass-dock" role="navigation" aria-label="Social connectivity dock">
+            <!-- GitHub Direct Link -->
+            <a href="https://github.com/Akash04092006" target="_blank" rel="noopener noreferrer" class="dock-icon-btn dock-icon-github" title="GitHub (@Akash04092006)" aria-label="GitHub Profile">
+              <i class="fa-brands fa-github"></i>
+            </a>
+
+            <!-- LinkedIn Profile Link -->
+            <a href="{{ personal_info.social.linkedin }}" target="_blank" rel="noopener noreferrer" class="dock-icon-btn dock-icon-linkedin" title="LinkedIn Profile" aria-label="LinkedIn Profile">
+              <i class="fa-brands fa-linkedin"></i>
+            </a>
+
+            <!-- Instagram Feed Link -->
+            <a href="{{ personal_info.social.instagram }}" target="_blank" rel="noopener noreferrer" class="dock-icon-btn dock-icon-instagram" title="Instagram Profile" aria-label="Instagram Profile">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+
+            <!-- WhatsApp / Phone Direct Chat -->
+            <a href="{{ personal_info.social.whatsapp|default('https://wa.me/919876543210') }}" target="_blank" rel="noopener noreferrer" class="dock-icon-btn dock-icon-whatsapp" title="WhatsApp Message" aria-label="WhatsApp Message">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+
+            <!-- Direct Email Link -->
+            <a href="mailto:{{ personal_info.email }}" class="dock-icon-btn dock-icon-email" title="Send Direct Email" aria-label="Email Akash">
+              <i class="fa-regular fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Stats Glass Grid -->
         <div class="pt-6 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4">
           {% for stat in personal_info.quick_stats %}
-          <div class="glass-card p-4 rounded-xl text-left border-white/5 bg-slate-900/40">
-            <div class="text-2xl sm:text-3xl font-display font-bold text-white text-gradient-main">
+          <div class="glass-card card-spotlight p-4 rounded-xl text-left border-white/5 bg-slate-900/40">
+            <div class="text-2xl sm:text-3xl font-display font-bold text-white text-gradient-hero">
               {{ stat.value }}
             </div>
             <div class="text-xs text-slate-400 font-medium mt-1">
@@ -66,53 +105,56 @@
 
       <!-- Right Column: Interactive Glassmorphism Terminal Mockup -->
       <div class="lg:col-span-5">
-        <div class="glass-card p-1 rounded-2xl border border-indigo-500/20 shadow-2xl relative group">
+        <div class="glass-card card-spotlight p-1 rounded-2xl border border-indigo-500/25 shadow-2xl relative group">
           
-          <!-- Terminal Header -->
-          <div class="px-4 py-3 border-b border-white/10 flex items-center justify-between bg-slate-950/60 rounded-t-xl">
+          <!-- Terminal Header Bar -->
+          <div class="px-4 py-3 border-b border-white/10 flex items-center justify-between bg-slate-950/70 rounded-t-xl">
             <div class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
-              <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
-              <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block shadow-sm"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block shadow-sm"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block shadow-sm"></span>
             </div>
             <div class="text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
               <i class="fa-solid fa-terminal text-indigo-400 text-[10px]"></i>
-              <span>akash@system-host: ~</span>
+              <span>akash@system-core: ~</span>
             </div>
-            <div class="text-[11px] font-mono text-emerald-400">
-              <i class="fa-solid fa-shield-check"></i> v1.0.0
+            <div class="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
+              <i class="fa-solid fa-circle-check text-[10px]"></i>
+              <span>online</span>
             </div>
           </div>
 
-          <!-- Terminal Content -->
-          <div class="p-5 font-mono text-xs sm:text-[13px] leading-relaxed text-slate-300 space-y-4 bg-slate-950/80 rounded-b-xl overflow-x-auto">
+          <!-- Terminal Content Body -->
+          <div class="p-5 font-mono text-xs sm:text-[13px] leading-relaxed text-slate-300 space-y-4 bg-slate-950/85 rounded-b-xl overflow-x-auto">
             <div>
               <span class="text-emerald-400 font-bold">akash@dev:~$</span>
               <span class="text-indigo-300 ml-2">whoami --verbose</span>
               <p class="text-slate-400 text-xs mt-1 pl-4 border-l-2 border-indigo-500/40">
-                Full-Stack Systems Engineer based in {{ personal_info.location }}.<br>
-                Specializing in Flask/Python microservices, distributed pipelines, and responsive frontend architectures.
+                Name: Akash N<br>
+                Location: {{ personal_info.location }}<br>
+                Status: {{ personal_info.availability }}<br>
+                Focus: Flask backends, distributed microservices & high-speed interfaces.
               </p>
             </div>
 
             <div>
               <span class="text-emerald-400 font-bold">akash@dev:~$</span>
-              <span class="text-indigo-300 ml-2">cat current_stack.json</span>
+              <span class="text-indigo-300 ml-2">cat core_stack.json</span>
               <pre class="text-cyan-300 text-xs mt-1 pl-4 border-l-2 border-cyan-500/40">{
-  "backend": ["Python", "Flask", "FastAPI", "Go"],
-  "frontend": ["Tailwind CSS", "JavaScript", "HTML5"],
-  "infrastructure": ["Docker", "Kubernetes", "Vercel", "Redis"],
-  "philosophy": "Simplicity, Observability, Relentless Speed"
+  "core_languages": ["Python", "JavaScript", "SQL", "Go"],
+  "backend_frameworks": ["Flask", "FastAPI", "Gunicorn"],
+  "frontend_tooling": ["Tailwind CSS", "Jinja2", "Modern HTML5"],
+  "deployment_runtime": "Vercel Serverless / Docker"
 }</pre>
             </div>
 
             <div>
               <span class="text-emerald-400 font-bold">akash@dev:~$</span>
-              <span class="text-indigo-300 ml-2">check-readiness</span>
-              <div class="mt-1 pl-4 border-l-2 border-emerald-500/40 flex items-center gap-2 text-emerald-300 text-xs">
-                <i class="fa-solid fa-circle-check text-emerald-400"></i>
-                <span>Ready for Vercel Serverless & Production Deployment</span>
-              </div>
+              <span class="text-indigo-300 ml-2">git remote -v</span>
+              <p class="text-slate-400 text-xs mt-1 pl-4 border-l-2 border-emerald-500/40">
+                origin https://github.com/Akash04092006 (fetch)<br>
+                origin https://github.com/Akash04092006 (push)
+              </p>
             </div>
 
             <div class="pt-1 flex items-center gap-2 text-slate-500">
@@ -128,71 +170,247 @@
   </section>
 
   <!-- ========================================================================
-       LIFESTYLE & INTERESTS: 4 Dynamic Pillars (Volleyball, Gym, Studying, Coding)
+       2. MULTI-INTEREST LIFESTYLE & DISCIPLINE GRID
+       The 4 core lifestyle pillars: Volleyball, Gym, Deep Learning, Coding
+       Fluid responsive layout: lg:grid-cols-4, md:grid-cols-2, grid-cols-1
        ======================================================================== -->
   <section id="lifestyle" class="py-20 px-4 sm:px-8 max-w-7xl mx-auto relative">
     
     <!-- Section Header -->
     <div class="max-w-2xl mb-12 sm:mb-16">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-pill text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-3">
-        <i class="fa-solid fa-heart-pulse"></i>
-        <span>Discipline & Synergy</span>
+        <i class="fa-solid fa-bolt text-amber-400"></i>
+        <span>High-Performance Student Lifestyle</span>
       </div>
-      <h2 class="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">
-        Beyond The Terminal
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+        Multi-Discipline Engineering
       </h2>
       <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
-        High-performance engineering requires holistic discipline. Physical intensity, athletic strategy, and continuous curiosity directly feed into software problem-solving.
+        High-impact software engineering thrives on physical discipline, tactical reflex, rigorous academia, and relentless coding craft.
       </p>
     </div>
 
-    <!-- 4 Pillar Grid -->
+    <!-- 4 Core Lifestyle Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {% for card in lifestyle_cards %}
-      <div class="glass-card card-spotlight p-6 rounded-2xl flex flex-col justify-between border {{ card.accent_border }} bg-gradient-to-b {{ card.accent_gradient }}">
-        
-        <!-- Card Top: Icon & Category -->
+      
+      <!-- Pillar 1: Volleyball -->
+      <div class="glass-card card-spotlight card-spotlight-amber p-6 rounded-2xl flex flex-col justify-between border-amber-500/30 hover:border-amber-400/60 bg-gradient-to-b from-amber-500/15 via-orange-500/5 to-transparent group">
         <div class="space-y-4">
+          
+          <!-- Top Row: Icon, Category Badge & Stat -->
           <div class="flex items-center justify-between">
-            <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xl shadow-inner {{ card.badge_color }}">
-              <i class="{{ card.icon }}"></i>
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl shadow-lg shadow-amber-500/15 group-hover:scale-110 group-hover:bg-amber-500/20 transition-all duration-300">
+              <i class="fa-solid fa-volleyball"></i>
             </div>
-            <span class="text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full border {{ card.badge_color }}">
-              {{ card.stat_pill }}
+            <span class="text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/25">
+              Varsity Spiker
             </span>
           </div>
 
+          <!-- Titles -->
           <div>
-            <span class="text-xs font-medium text-slate-400 block tracking-wider uppercase">
-              {{ card.category }}
+            <span class="text-xs font-semibold text-amber-400/90 block tracking-wider uppercase">
+              Athletics & Synergy
             </span>
-            <h3 class="text-xl font-display font-bold text-white mt-1">
-              {{ card.title }}
+            <h3 class="text-xl font-display font-bold text-white mt-1 group-hover:text-amber-300 transition-colors">
+              Volleyball
             </h3>
-            <p class="text-xs text-indigo-300/90 font-medium mt-0.5">
-              {{ card.tagline }}
+            <p class="text-xs text-amber-200/80 font-medium mt-1">
+              Team coordination, agility, tactical communication, explosive reflex
             </p>
           </div>
 
-          <p class="text-xs sm:text-sm text-slate-300/80 leading-relaxed pt-2">
-            {{ card.description }}
+          <!-- Accent Glow Line -->
+          <div class="accent-glow-line text-amber-400"></div>
+
+          <!-- Description -->
+          <p class="text-xs sm:text-sm text-slate-300/85 leading-relaxed">
+            Active spiker and court strategist. Fast-paced rallies demand split-second decision making, precision spatial awareness, and instant synchronous communication with teammates under pressure.
           </p>
+
+          <!-- Core Attributes Pills -->
+          <div class="flex flex-wrap gap-1.5 pt-2">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-amber-300">Reaction Speed</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300">Court Vision</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300">Synergy</span>
+          </div>
+
         </div>
 
-        <!-- Card Bottom Indicator -->
-        <div class="pt-6 mt-6 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
-          <span class="font-mono text-[11px]">pillar_{{ loop.index }}</span>
-          <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-500"></i>
+        <!-- Card Footer -->
+        <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+          <span class="font-mono text-[11px] text-amber-400/80">pillar_01</span>
+          <span class="text-[11px] text-slate-400 flex items-center gap-1">
+            <i class="fa-solid fa-arrows-split-up-and-left text-[10px]"></i> Agility
+          </span>
         </div>
-
       </div>
-      {% endfor %}
+
+      <!-- Pillar 2: Gym & Strength Training -->
+      <div class="glass-card card-spotlight card-spotlight-rose p-6 rounded-2xl flex flex-col justify-between border-rose-500/30 hover:border-rose-400/60 bg-gradient-to-b from-rose-500/15 via-red-500/5 to-transparent group">
+        <div class="space-y-4">
+          
+          <!-- Top Row: Icon, Category Badge & Stat -->
+          <div class="flex items-center justify-between">
+            <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 flex items-center justify-center text-xl shadow-lg shadow-rose-500/15 group-hover:scale-110 group-hover:bg-rose-500/20 transition-all duration-300">
+              <i class="fa-solid fa-dumbbell"></i>
+            </div>
+            <span class="text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/25">
+              5-6 Days / Week
+            </span>
+          </div>
+
+          <!-- Titles -->
+          <div>
+            <span class="text-xs font-semibold text-rose-400/90 block tracking-wider uppercase">
+              Physical Discipline
+            </span>
+            <h3 class="text-xl font-display font-bold text-white mt-1 group-hover:text-rose-300 transition-colors">
+              Gym & Strength
+            </h3>
+            <p class="text-xs text-rose-200/80 font-medium mt-1">
+              Progressive overload, physical discipline, daily consistency, endurance
+            </p>
+          </div>
+
+          <!-- Accent Glow Line -->
+          <div class="accent-glow-line text-rose-400"></div>
+
+          <!-- Description -->
+          <p class="text-xs sm:text-sm text-slate-300/85 leading-relaxed">
+            Consistent daily resistance training and conditioning. Approaching strength and stamina with the exact same mindset as systems engineering: measured inputs, systematic recovery, and compounding gains.
+          </p>
+
+          <!-- Core Attributes Pills -->
+          <div class="flex flex-wrap gap-1.5 pt-2">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-rose-300">Progressive Overload</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300">Grit</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300">Recovery</span>
+          </div>
+
+        </div>
+
+        <!-- Card Footer -->
+        <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+          <span class="font-mono text-[11px] text-rose-400/80">pillar_02</span>
+          <span class="text-[11px] text-slate-400 flex items-center gap-1">
+            <i class="fa-solid fa-heart-pulse text-[10px]"></i> Endurance
+          </span>
+        </div>
+      </div>
+
+      <!-- Pillar 3: Deep Learning / Academics -->
+      <div class="glass-card card-spotlight card-spotlight-sky p-6 rounded-2xl flex flex-col justify-between border-sky-500/30 hover:border-sky-400/60 bg-gradient-to-b from-sky-500/15 via-blue-500/5 to-transparent group">
+        <div class="space-y-4">
+          
+          <!-- Top Row: Icon, Category Badge & Stat -->
+          <div class="flex items-center justify-between">
+            <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center text-xl shadow-lg shadow-sky-500/15 group-hover:scale-110 group-hover:bg-sky-500/20 transition-all duration-300">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <span class="text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-sky-500/10 text-sky-300 border border-sky-500/25">
+              Lifelong Student
+            </span>
+          </div>
+
+          <!-- Titles -->
+          <div>
+            <span class="text-xs font-semibold text-sky-400/90 block tracking-wider uppercase">
+              Academic Rigor
+            </span>
+            <h3 class="text-xl font-display font-bold text-white mt-1 group-hover:text-sky-300 transition-colors">
+              Deep Learning
+            </h3>
+            <p class="text-xs text-sky-200/80 font-medium mt-1">
+              Computer science rigor, AI algorithms, deep study blocks, problem solving
+            </p>
+          </div>
+
+          <!-- Accent Glow Line -->
+          <div class="accent-glow-line text-sky-400"></div>
+
+          <!-- Description -->
+          <p class="text-xs sm:text-sm text-slate-300/85 leading-relaxed">
+            Immersing in distributed architectures, database internals, compiler principles, and modern generative AI models. Relentless curiosity transforms theoretical foundations into real-world engineering power.
+          </p>
+
+          <!-- Core Attributes Pills -->
+          <div class="flex flex-wrap gap-1.5 pt-2">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-sky-300">CS Rigor</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300">AI Models</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300">Deep Work</span>
+          </div>
+
+        </div>
+
+        <!-- Card Footer -->
+        <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+          <span class="font-mono text-[11px] text-sky-400/80">pillar_03</span>
+          <span class="text-[11px] text-slate-400 flex items-center gap-1">
+            <i class="fa-solid fa-graduation-cap text-[10px]"></i> Academia
+          </span>
+        </div>
+      </div>
+
+      <!-- Pillar 4: Software Engineering / Coding -->
+      <div class="glass-card card-spotlight card-spotlight-emerald p-6 rounded-2xl flex flex-col justify-between border-emerald-500/30 hover:border-emerald-400/60 bg-gradient-to-b from-emerald-500/15 via-teal-500/5 to-transparent group">
+        <div class="space-y-4">
+          
+          <!-- Top Row: Icon, Category Badge & Stat -->
+          <div class="flex items-center justify-between">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl shadow-lg shadow-emerald-500/15 group-hover:scale-110 group-hover:bg-emerald-500/20 transition-all duration-300">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <span class="text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">
+              1.5k+ Commits
+            </span>
+          </div>
+
+          <!-- Titles -->
+          <div>
+            <span class="text-xs font-semibold text-emerald-400/90 block tracking-wider uppercase">
+              Code Craftsmanship
+            </span>
+            <h3 class="text-xl font-display font-bold text-white mt-1 group-hover:text-emerald-300 transition-colors">
+              Software Engineering
+            </h3>
+            <p class="text-xs text-emerald-200/80 font-medium mt-1">
+              System architecture, full-stack development, clean code, building projects
+            </p>
+          </div>
+
+          <!-- Accent Glow Line -->
+          <div class="accent-glow-line text-emerald-400"></div>
+
+          <!-- Description -->
+          <p class="text-xs sm:text-sm text-slate-300/85 leading-relaxed">
+            Designing and writing maintainable, tested, production-grade code. Obsessed with clean abstractions, sub-millisecond latency, robust developer tooling, and mesmerizing glassmorphic UI aesthetics.
+          </p>
+
+          <!-- Core Attributes Pills -->
+          <div class="flex flex-wrap gap-1.5 pt-2">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-emerald-300">Architecture</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300">Full-Stack</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300">Clean Code</span>
+          </div>
+
+        </div>
+
+        <!-- Card Footer -->
+        <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+          <span class="font-mono text-[11px] text-emerald-400/80">pillar_04</span>
+          <span class="text-[11px] text-slate-400 flex items-center gap-1">
+            <i class="fa-solid fa-cubes-stacked text-[10px]"></i> Production
+          </span>
+        </div>
+      </div>
+
     </div>
 
   </section>
 
   <!-- ========================================================================
-       FEATURED PROJECTS: Modular, Plug-and-Play Engineering Showcase
+       3. FEATURED PROJECTS: Modular, Plug-and-Play Engineering Showcase
        ======================================================================== -->
   <section id="projects" class="py-20 px-4 sm:px-8 max-w-7xl mx-auto relative">
     
@@ -203,7 +421,7 @@
           <i class="fa-solid fa-layer-group"></i>
           <span>Engineering Portfolio</span>
         </div>
-        <h2 class="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
           Featured Systems & Architecture
         </h2>
         <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
@@ -212,9 +430,9 @@
       </div>
 
       <!-- Quick GitHub Link -->
-      <a href="{{ personal_info.social.github }}" target="_blank" rel="noopener noreferrer" class="glass-button-secondary px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white inline-flex items-center gap-2 self-start md:self-auto">
+      <a href="https://github.com/Akash04092006" target="_blank" rel="noopener noreferrer" class="glass-button-secondary px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white inline-flex items-center gap-2 self-start md:self-auto">
         <i class="fa-brands fa-github text-sm"></i>
-        <span>View Complete GitHub Index</span>
+        <span>View @Akash04092006 on GitHub</span>
       </a>
     </div>
 
@@ -293,7 +511,7 @@
   </section>
 
   <!-- ========================================================================
-       HACKATHONS & ACHIEVEMENTS: Competition Record
+       4. HACKATHONS & ACHIEVEMENTS: Competition Record
        ======================================================================== -->
   <section id="hackathons" class="py-20 px-4 sm:px-8 max-w-7xl mx-auto relative">
     
@@ -303,8 +521,8 @@
         <i class="fa-solid fa-trophy"></i>
         <span>Competitive Track Record</span>
       </div>
-      <h2 class="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">
-        Hackathons & Innovations
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+        Hackathons & Milestones
       </h2>
       <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
         Fast-paced sprint environments testing architectural thinking, real-time collaboration, and execution velocity under intense deadlines.
@@ -357,7 +575,7 @@
   </section>
 
   <!-- ========================================================================
-       CONTACT & INQUIRY: Direct Gateway
+       5. CONTACT & INQUIRY: Direct Gateway
        ======================================================================== -->
   <section id="contact" class="py-20 px-4 sm:px-8 max-w-7xl mx-auto relative">
     <div class="glass-panel p-8 sm:p-12 lg:p-16 rounded-3xl border border-indigo-500/30 bg-gradient-to-br from-indigo-950/40 via-slate-900/60 to-slate-950/80 relative overflow-hidden">
@@ -392,16 +610,16 @@
             <span>Copy {{ personal_info.email }}</span>
           </button>
 
-          <a href="tel:{{ personal_info.phone }}" class="glass-button-secondary px-5 py-3.5 rounded-xl font-medium text-sm text-slate-200 hover:text-white inline-flex items-center gap-2">
-            <i class="fa-solid fa-phone text-emerald-400 text-xs"></i>
-            <span>{{ personal_info.phone }}</span>
+          <a href="{{ personal_info.social.whatsapp|default('https://wa.me/919876543210') }}" target="_blank" rel="noopener noreferrer" class="glass-button-secondary px-5 py-3.5 rounded-xl font-medium text-sm text-slate-200 hover:text-white inline-flex items-center gap-2">
+            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i>
+            <span>Chat on WhatsApp</span>
           </a>
         </div>
 
         <!-- Social Media Grid -->
         <div class="pt-8 border-t border-white/10 flex flex-wrap items-center gap-4 text-xs text-slate-400 font-medium">
           <span>Active Channels:</span>
-          <a href="{{ personal_info.social.github }}" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-1.5">
+          <a href="https://github.com/Akash04092006" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-1.5">
             <i class="fa-brands fa-github text-slate-300"></i> GitHub
           </a>
           <span class="text-slate-600">•</span>

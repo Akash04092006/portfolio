@@ -1,30 +1,126 @@
 /**
- * Modular High-End Personal Portfolio - Main Frontend Script
- * Handles dynamic interactions, glassmorphism lighting effects, and UI utilities.
+ * Modular High-End Personal Portfolio - Main Frontend Script (Part 2)
+ * Advanced interactive spotlight engine, scroll-spy navigation, and glass UI utilities.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  initCardSpotlightLighting();
+  initActiveNavTracking();
   initNavbarScroll();
   initMobileMenu();
-  initCardSpotlightLighting();
   initCopyEmail();
-  initActiveNavTracking();
   initBackToTop();
+  initSmoothAnchorScroll();
   printConsoleBanner();
 });
 
 /**
- * Elevates navbar with darker background and border when scrolled
+ * --------------------------------------------------------------------------
+ * 1. INTERACTIVE CURSOR SPOTLIGHT ENGINE
+ * Dynamically calculates mouse coordinates relative to card boundaries
+ * and updates CSS custom properties (--mouse-x, --mouse-y) in real time.
+ * --------------------------------------------------------------------------
+ */
+function initCardSpotlightLighting() {
+  const spotlightElements = document.querySelectorAll(".card-spotlight, .glass-card");
+  if (!spotlightElements.length) return;
+
+  spotlightElements.forEach((card) => {
+    // Mouse movement listener
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      card.style.setProperty("--mouse-x", `${x}px`);
+      card.style.setProperty("--mouse-y", `${y}px`);
+    });
+
+    // Reset off-screen smoothly on mouse leave so radial glow fades cleanly
+    card.addEventListener("mouseleave", () => {
+      card.style.setProperty("--mouse-x", "-300px");
+      card.style.setProperty("--mouse-y", "-300px");
+    });
+  });
+}
+
+/**
+ * --------------------------------------------------------------------------
+ * 2. ACTIVE NAVIGATION SCROLL-SPY
+ * Highlights the header navbar links based on the active viewport section.
+ * --------------------------------------------------------------------------
+ */
+function initActiveNavTracking() {
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-link[href^='#']");
+  const mobileNavLinks = document.querySelectorAll(".mobile-nav-link[href^='#']");
+
+  if (!sections.length || !navLinks.length) return;
+
+  const observerOptions = {
+    root: null,
+    rootMargin: "-25% 0px -55% 0px",
+    threshold: 0.15
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute("id");
+
+        // Update Desktop Links
+        navLinks.forEach((link) => {
+          const href = link.getAttribute("href");
+          if (href === `#${id}`) {
+            link.classList.add("text-indigo-400", "font-semibold", "bg-white/5");
+            link.classList.remove("text-slate-300");
+          } else {
+            link.classList.remove("text-indigo-400", "font-semibold", "bg-white/5");
+            link.classList.add("text-slate-300");
+          }
+        });
+
+        // Update Mobile Links
+        mobileNavLinks.forEach((link) => {
+          const href = link.getAttribute("href");
+          if (href === `#${id}`) {
+            link.classList.add("text-indigo-400", "font-semibold", "bg-white/10");
+            link.classList.remove("text-slate-300");
+          } else {
+            link.classList.remove("text-indigo-400", "font-semibold", "bg-white/10");
+            link.classList.add("text-slate-300");
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach((section) => observer.observe(section));
+}
+
+/**
+ * --------------------------------------------------------------------------
+ * 3. STICKY NAVBAR ELEVATION
+ * Elevates navbar with intensified glass backdrop blur when scrolled.
+ * --------------------------------------------------------------------------
  */
 function initNavbarScroll() {
   const navbar = document.getElementById("main-nav");
   if (!navbar) return;
 
+  let ticking = false;
+
   const handleScroll = () => {
-    if (window.scrollY > 20) {
-      navbar.classList.add("scrolled");
-    } else {
-      navbar.classList.remove("scrolled");
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 25) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+        ticking = false;
+      });
+      ticking = true;
     }
   };
 
@@ -33,7 +129,9 @@ function initNavbarScroll() {
 }
 
 /**
- * Mobile responsive menu drawer toggle
+ * --------------------------------------------------------------------------
+ * 4. MOBILE HAMBURGER MENU WITH SMOOTH BACKDROP BLUR
+ * --------------------------------------------------------------------------
  */
 function initMobileMenu() {
   const menuBtn = document.getElementById("mobile-menu-btn");
@@ -44,58 +142,51 @@ function initMobileMenu() {
 
   const toggleMenu = () => {
     const isExpanded = menuBtn.getAttribute("aria-expanded") === "true";
-    menuBtn.setAttribute("aria-expanded", String(!isExpanded));
+    const newState = !isExpanded;
+
+    menuBtn.setAttribute("aria-expanded", String(newState));
     mobileMenu.classList.toggle("hidden");
 
-    // Toggle icon animation
+    // Toggle icon state
     const icon = menuBtn.querySelector("i");
     if (icon) {
-      if (mobileMenu.classList.contains("hidden")) {
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
-      } else {
+      if (newState) {
         icon.classList.remove("fa-bars");
         icon.classList.add("fa-xmark");
+      } else {
+        icon.classList.remove("fa-xmark");
+        icon.classList.add("fa-bars");
       }
     }
   };
 
   menuBtn.addEventListener("click", toggleMenu);
 
-  mobileLinks.forEach(link => {
+  // Close menu on link click
+  mobileLinks.forEach((link) => {
     link.addEventListener("click", () => {
-      mobileMenu.classList.add("hidden");
-      menuBtn.setAttribute("aria-expanded", "false");
-      const icon = menuBtn.querySelector("i");
-      if (icon) {
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
+      if (!mobileMenu.classList.contains("hidden")) {
+        toggleMenu();
       }
     });
   });
-}
 
-/**
- * Subtle dynamic spotlight lighting effect that follows mouse cursor over cards
- */
-function initCardSpotlightLighting() {
-  const cards = document.querySelectorAll(".card-spotlight");
-  if (!cards.length) return;
-
-  cards.forEach(card => {
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      card.style.setProperty("--mouse-x", `${x}px`);
-      card.style.setProperty("--mouse-y", `${y}px`);
-    });
+  // Close menu on click outside
+  document.addEventListener("click", (e) => {
+    if (
+      !mobileMenu.classList.contains("hidden") &&
+      !mobileMenu.contains(e.target) &&
+      !menuBtn.contains(e.target)
+    ) {
+      toggleMenu();
+    }
   });
 }
 
 /**
- * Interactive one-click copy email button with sleek toast notification
+ * --------------------------------------------------------------------------
+ * 5. ONE-CLICK EMAIL CLIPBOARD WITH GLASS TOAST
+ * --------------------------------------------------------------------------
  */
 function initCopyEmail() {
   const copyBtns = document.querySelectorAll(".copy-email-btn");
@@ -104,30 +195,30 @@ function initCopyEmail() {
 
   if (!copyBtns.length) return;
 
-  copyBtns.forEach(btn => {
+  copyBtns.forEach((btn) => {
     btn.addEventListener("click", async (e) => {
       e.preventDefault();
-      const emailToCopy = btn.getAttribute("data-email") || "akashgowdan2006@gmail.com";
+      const email = btn.getAttribute("data-email") || "akashgowdan2006@gmail.com";
 
       try {
-        await navigator.clipboard.writeText(emailToCopy);
-        showToast("Email copied to clipboard!");
+        await navigator.clipboard.writeText(email);
+        showToast(`Copied to clipboard: ${email}`);
       } catch (err) {
-        // Fallback for older browsers or restricted permissions
-        const textArea = document.createElement("textarea");
-        textArea.value = emailToCopy;
-        textArea.style.position = "fixed";
-        textArea.style.left = "-999999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
+        // Fallback copy implementation
+        const textarea = document.createElement("textarea");
+        textarea.value = email;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
         try {
           document.execCommand("copy");
-          showToast("Email copied to clipboard!");
-        } catch (subErr) {
-          showToast("Press Ctrl+C to copy: " + emailToCopy);
+          showToast(`Copied to clipboard: ${email}`);
+        } catch (fallbackErr) {
+          showToast(`Email: ${email}`);
         }
-        document.body.removeChild(textArea);
+        document.body.removeChild(textarea);
       }
     });
   });
@@ -138,7 +229,6 @@ function initCopyEmail() {
     if (msgEl) msgEl.textContent = message;
 
     toast.classList.remove("hidden");
-    // Trigger CSS transition
     requestAnimationFrame(() => {
       toast.classList.add("show");
     });
@@ -149,54 +239,21 @@ function initCopyEmail() {
       setTimeout(() => {
         toast.classList.add("hidden");
       }, 350);
-    }, 3000);
+    }, 3200);
   }
 }
 
 /**
- * Tracks current active section using IntersectionObserver to highlight navbar items
- */
-function initActiveNavTracking() {
-  const sections = document.querySelectorAll("section[id]");
-  const navLinks = document.querySelectorAll(".nav-link[href^='#']");
-
-  if (!sections.length || !navLinks.length) return;
-
-  const observerOptions = {
-    root: null,
-    rootMargin: "-20% 0px -60% 0px",
-    threshold: 0.1
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute("id");
-        navLinks.forEach(link => {
-          if (link.getAttribute("href") === `#${id}`) {
-            link.classList.add("text-indigo-400", "font-semibold");
-            link.classList.remove("text-slate-300");
-          } else {
-            link.classList.remove("text-indigo-400", "font-semibold");
-            link.classList.add("text-slate-300");
-          }
-        });
-      }
-    });
-  }, observerOptions);
-
-  sections.forEach(section => observer.observe(section));
-}
-
-/**
- * Floating Back-to-Top Button
+ * --------------------------------------------------------------------------
+ * 6. FLOATING BACK-TO-TOP BUTTON
+ * --------------------------------------------------------------------------
  */
 function initBackToTop() {
   const bttBtn = document.getElementById("back-to-top");
   if (!bttBtn) return;
 
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 400) {
+    if (window.scrollY > 450) {
       bttBtn.classList.remove("opacity-0", "pointer-events-none", "translate-y-4");
       bttBtn.classList.add("opacity-100", "translate-y-0");
     } else {
@@ -211,20 +268,47 @@ function initBackToTop() {
 }
 
 /**
- * Console developer greeting
+ * --------------------------------------------------------------------------
+ * 7. SMOOTH ANCHOR SCROLLING WITH OFFSET
+ * --------------------------------------------------------------------------
+ */
+function initSmoothAnchorScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      const targetId = this.getAttribute("href");
+      if (targetId === "#" || targetId === "") return;
+
+      const targetEl = document.querySelector(targetId);
+      if (targetEl) {
+        e.preventDefault();
+        const navHeight = 72;
+        const elementPosition = targetEl.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    });
+  });
+}
+
+/**
+ * Developer console greeting
  */
 function printConsoleBanner() {
   const styles = [
-    "color: #818cf8",
+    "color: #38bdf8",
     "font-size: 13px",
     "font-family: monospace",
-    "font-weight: bold",
-    "padding: 6px 10px",
+    "font-weight: 700",
+    "padding: 8px 12px",
     "background: #0f172a",
-    "border-radius: 6px",
-    "border: 1px solid #334155"
+    "border-radius: 8px",
+    "border: 1px solid #1e293b"
   ].join(";");
 
-  console.log("%c⚡ Akash N | Full-Stack Engineer Portfolio Initialized.", styles);
-  console.log("%cCurious about the codebase? Inspect the clean Flask + Tailwind architecture.", "color: #94a3b8; font-size: 11px;");
+  console.log("%c⚡ Akash N | Glassmorphic Portfolio Engine Active.", styles);
+  console.log("%cGitHub: https://github.com/Akash04092006", "color: #94a3b8; font-size: 11px;");
 }
