@@ -1163,4 +1163,63 @@ body {
   transform: scale(1) translateY(0);
 }
 
+/* --------------------------------------------------------------------------
+   15. PRODUCTION TUNING & ACCESSIBILITY (PART 6)
+   Keyboard focus rings, content-visibility containment, reduced motion
+   -------------------------------------------------------------------------- */
+
+/* High-Contrast Keyboard Focus Indicators */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #38bdf8 !important;
+  outline-offset: 3px !important;
+}
+
+/* Content Visibility Performance Optimization for Below-the-Fold Sections */
+#hackathons,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
+}
+
+/* Accessible Motion Preferences (WCAG AA Compliance) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .mesh-sphere {
+    animation: none !important;
+  }
+
+  .pulse-beacon::after {
+    animation: none !important;
+  }
+}
+
+/* Print Optimization */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .glass-nav,
+  .cli-trigger-btn,
+  #back-to-top,
+  .mesh-gradient-container,
+  #cli-modal,
+  #skill-detail-modal {
+    display: none !important;
+  }
+}
+
 

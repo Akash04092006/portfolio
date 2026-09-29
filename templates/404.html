@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}404 - Sector Not Found | {{ personal_info.name }}{% endblock %}
+{% block title %}404 - Coordinates Not Found | {{ personal_info.name }}{% endblock %}
+{% block meta_description %}The requested sector or route does not exist in this portfolio architecture.{% endblock %}
 
 {% block content %}
 <div class="min-h-[70vh] flex items-center justify-center px-4 py-20 max-w-4xl mx-auto">
-  <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-indigo-500/20 text-center space-y-6 max-w-xl mx-auto relative overflow-hidden">
+  <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-indigo-500/20 text-center space-y-6 max-w-xl mx-auto relative overflow-hidden shadow-2xl">
     
     <!-- Background Glow -->
     <div class="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-indigo-500/15 blur-3xl pointer-events-none"></div>
 
-    <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 mx-auto flex items-center justify-center text-2xl">
+    <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 mx-auto flex items-center justify-center text-2xl shadow-lg">
       <i class="fa-solid fa-compass-drafting"></i>
     </div>
 
@@ -24,12 +25,12 @@
     </div>
 
     <div class="pt-4 flex flex-wrap items-center justify-center gap-4">
-      <a href="{{ url_for('index') }}" class="glass-button-primary px-6 py-3 rounded-xl text-sm font-semibold text-white inline-flex items-center gap-2">
+      <a href="{{ url_for('index') }}" class="glass-button-primary px-6 py-3 rounded-xl text-sm font-semibold text-white inline-flex items-center gap-2 cursor-pointer shadow-lg shadow-indigo-500/30">
         <i class="fa-solid fa-house text-xs"></i>
         <span>Return to Base Station</span>
       </a>
-      <a href="{{ url_for('index') }}#contact" class="glass-button-secondary px-5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:text-white inline-flex items-center gap-2">
-        <i class="fa-regular fa-envelope text-xs"></i>
+      <a href="{{ url_for('index') }}#contact" class="glass-button-secondary px-5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:text-white inline-flex items-center gap-2 cursor-pointer">
+        <i class="fa-regular fa-envelope text-xs text-indigo-400"></i>
         <span>Report Issue</span>
       </a>
     </div>

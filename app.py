@@ -9,6 +9,13 @@ import logging
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 
+# Load local environment variables if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("portfolio")
@@ -893,29 +900,68 @@ def health_check():
     }, 200
 
 # -----------------------------------------------------------------------------
+# SECURITY & PERFORMANCE HEADERS
+# -----------------------------------------------------------------------------
+
+@app.after_request
+def add_security_and_cache_headers(response):
+    """
+    Applies recommended HTTP security headers and cache policies
+    for production deployment readiness.
+    """
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+
+    # Cache policies: immutable long cache for static assets, no-cache for dynamic app routes
+    if request.path.startswith("/static/"):
+        response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+    elif "Cache-Control" not in response.headers:
+        response.headers["Cache-Control"] = "no-cache, must-revalidate"
+
+    return response
+
+# -----------------------------------------------------------------------------
 # ERROR HANDLERS (404, 500)
 # -----------------------------------------------------------------------------
 
 @app.errorhandler(404)
 def page_not_found(error):
-    """User-friendly glassmorphic 404 Not Found view."""
+    """User-friendly 404 handler supporting both JSON API calls and glassmorphic UI."""
+    if request.path.startswith("/api/") or request.is_json or "application/json" in request.headers.get("Accept", ""):
+        return jsonify({
+            "success": False,
+            "error": "The requested API endpoint was not found.",
+            "status_code": 404
+        }), 404
+
     return render_template(
         "404.html",
         personal_info=PERSONAL_INFO,
         current_year=datetime.now().year,
-        error_title="Page Not Found",
-        error_message="The coordinate or page you requested does not exist in this sector."
+        error_title="Coordinates Not Found",
+        error_message="The requested sector or endpoint is not mapped in this deployment architecture."
     ), 404
 
 @app.errorhandler(500)
 def internal_server_error(error):
-    """User-friendly glassmorphic 500 Internal Server Error view."""
+    """User-friendly 500 handler supporting both JSON API calls and glassmorphic UI."""
+    logger.error(f"Internal Server Anomaly on {request.path}: {error}")
+    if request.path.startswith("/api/") or request.is_json or "application/json" in request.headers.get("Accept", ""):
+        return jsonify({
+            "success": False,
+            "error": "Internal server disturbance encountered. Diagnostics logged.",
+            "status_code": 500
+        }), 500
+
     return render_template(
         "500.html",
         personal_info=PERSONAL_INFO,
         current_year=datetime.now().year,
-        error_title="Internal System Anomaly",
-        error_message="An unexpected condition was encountered. Our monitoring agents have been notified."
+        error_title="System Anomaly Encountered",
+        error_message="A temporary disturbance occurred within the backend service. Self-healing protocols are active."
     ), 500
 
 # -----------------------------------------------------------------------------

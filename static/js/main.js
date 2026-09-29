@@ -807,13 +807,22 @@ function initSkillsArsenal() {
         }
       }
 
+      lastFocusedSkillEl = document.activeElement;
       modal.classList.add("open");
       document.body.style.overflow = "hidden";
+      setTimeout(() => {
+        closeBtn?.focus();
+      }, 50);
     };
+
+    let lastFocusedSkillEl = null;
 
     const closeModal = () => {
       modal.classList.remove("open");
       document.body.style.overflow = "";
+      if (lastFocusedSkillEl && typeof lastFocusedSkillEl.focus === "function") {
+        lastFocusedSkillEl.focus();
+      }
     };
 
     // Attach click listeners to cards and trigger buttons

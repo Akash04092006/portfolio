@@ -7,15 +7,39 @@
 
   <title>{% block title %}{{ personal_info.name }} | {{ personal_info.role }}{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}{{ personal_info.name }} - {{ personal_info.role }}. {{ personal_info.tagline }}{% endblock %}">
-  <meta name="keywords" content="Portfolio, Full-Stack Developer, Software Engineer, Python, Flask, Tailwind CSS, AI Systems, Distributed Systems, Bengaluru">
+  <meta name="keywords" content="{% block meta_keywords %}Akash N, Portfolio, Full-Stack Developer, Software Engineer, Python, Flask, Tailwind CSS, AI Systems, Distributed Systems, Bengaluru, Engineering Lead{% endblock %}">
   <meta name="author" content="{{ personal_info.name }}">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#07090e">
+  <meta name="msapplication-TileColor" content="#07090e">
 
-  <!-- Open Graph / Social Meta -->
+  <!-- Canonical URL -->
+  <link rel="canonical" href="{{ request.base_url }}">
+
+  <!-- Favicons & App Icons (Inline Scalable SVG Monogram) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%236366f1'/><stop offset='50%25' stop-color='%2306b6d4'/><stop offset='100%25' stop-color='%2310b981'/></linearGradient></defs><rect width='100' height='100' rx='25' fill='%2307090e'/><rect x='3' y='3' width='94' height='94' rx='22' fill='none' stroke='url(%23g)' stroke-width='4'/><text x='50' y='68' font-family='system-ui, -apple-system, sans-serif' font-weight='900' font-size='56' fill='url(%23g)' text-anchor='middle'>A</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2307090e'/><text x='50' y='68' font-family='system-ui, -apple-system, sans-serif' font-weight='900' font-size='56' fill='%2338bdf8' text-anchor='middle'>A</text></svg>">
+
+  <!-- Open Graph / Facebook / LinkedIn Meta -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="{{ personal_info.name }} | {{ personal_info.role }}">
-  <meta property="og:description" content="{{ personal_info.tagline }}">
+  <meta property="og:site_name" content="{{ personal_info.name }} Portfolio">
+  <meta property="og:title" content="{% block og_title %}{{ personal_info.name }} | {{ personal_info.role }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ personal_info.tagline }} - Exploring distributed architectures, AI intelligence, and high-performance software engineering.{% endblock %}">
+  <meta property="og:url" content="{{ request.base_url }}">
   <meta property="og:image" content="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ personal_info.name }} - Full-Stack & AI Systems Developer Portfolio">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card Metadata -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@Akash04092006">
+  <meta name="twitter:creator" content="@Akash04092006">
+  <meta name="twitter:title" content="{% block twitter_title %}{{ personal_info.name }} | {{ personal_info.role }}{% endblock %}">
+  <meta name="twitter:description" content="{% block twitter_description %}{{ personal_info.tagline }}{% endblock %}">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80">
+  <meta name="twitter:image:alt" content="{{ personal_info.name }} - Full-Stack & AI Systems Developer Portfolio">
 
   <!-- Google Fonts: Inter & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
