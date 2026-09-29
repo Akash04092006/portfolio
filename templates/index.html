@@ -410,7 +410,158 @@
   </section>
 
   <!-- ========================================================================
-       3. FEATURED PROJECTS: Dynamic Data-Driven Engineering Showcase (Part 3)
+       3. SKILLS & TECHNICAL ARSENAL: Categorized Proficiency & Deep-Dive (Part 5)
+       Interactive Category Filtering, Animated Glowing Meters & Modal Breakdown
+       ======================================================================== -->
+  <section id="skills" class="py-20 px-4 sm:px-8 max-w-7xl mx-auto relative">
+    
+    <!-- Section Header & Overview -->
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-12 sm:mb-16 gap-8">
+      <div class="max-w-2xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-pill text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-3">
+          <i class="fa-solid fa-microchip"></i>
+          <span>Technical Arsenal</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+          Skills, Tools & Engineering Stack
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
+          A battle-tested spectrum of low-level systems, distributed backends, AI algorithms, and modern cloud deployment pipelines. Continuous mastery through real-world implementation.
+        </p>
+      </div>
+
+      <!-- Quick Tech Summary Pill -->
+      <div class="hidden sm:flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2.5 rounded-2xl self-start lg:self-auto shrink-0 shadow-lg">
+        <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 pulse-beacon"></div>
+        <span class="text-xs font-mono text-slate-300">
+          <span class="text-white font-bold">{{ all_skills | length }}</span> Technologies Mastered
+        </span>
+      </div>
+    </div>
+
+    <!-- Category Filter Navigation Tabs -->
+    <div class="flex items-center justify-start lg:justify-center overflow-x-auto pb-4 mb-10 no-scrollbar">
+      <div class="skill-filter-tabs-container">
+        <button type="button" class="skill-filter-tab active" data-skill-filter="all">
+          <i class="fa-solid fa-layer-group mr-1.5 text-xs"></i>
+          <span>All Arsenal</span>
+          <span class="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-white/10 text-cyan-300">{{ all_skills | length }}</span>
+        </button>
+        <button type="button" class="skill-filter-tab" data-skill-filter="languages">
+          <i class="fa-solid fa-code mr-1.5 text-xs"></i>
+          <span>Languages</span>
+          <span class="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-white/10 text-slate-300">{{ skills.languages | length }}</span>
+        </button>
+        <button type="button" class="skill-filter-tab" data-skill-filter="frameworks">
+          <i class="fa-solid fa-cubes mr-1.5 text-xs"></i>
+          <span>Frameworks & Web</span>
+          <span class="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-white/10 text-slate-300">{{ skills.frameworks | length }}</span>
+        </button>
+        <button type="button" class="skill-filter-tab" data-skill-filter="ai_data">
+          <i class="fa-solid fa-brain mr-1.5 text-xs"></i>
+          <span>AI & Data Science</span>
+          <span class="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-white/10 text-slate-300">{{ skills.ai_data | length }}</span>
+        </button>
+        <button type="button" class="skill-filter-tab" data-skill-filter="tools_devops">
+          <i class="fa-solid fa-terminal mr-1.5 text-xs"></i>
+          <span>Tools & DevOps</span>
+          <span class="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-white/10 text-slate-300">{{ skills.tools_devops | length }}</span>
+        </button>
+        <button type="button" class="skill-filter-tab" data-skill-filter="systems_embedded">
+          <i class="fa-solid fa-microchip mr-1.5 text-xs"></i>
+          <span>Systems & Embedded</span>
+          <span class="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-white/10 text-slate-300">{{ skills.systems_embedded | length }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Responsive Skill Cards Grid (lg:3, md:2, sm:1) -->
+    <div id="skills-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for skill in all_skills %}
+      <div 
+        class="skill-card p-6 border-slate-700/60 group" 
+        data-skill-id="{{ skill.id }}"
+        data-category="{{ skill.category }}"
+        data-skill-name="{{ skill.name }}"
+        data-skill-badge="{{ skill.badge }}"
+        data-skill-badge-color="{{ skill.badge_color }}"
+        data-skill-proficiency="{{ skill.proficiency }}"
+        data-skill-icon="{{ skill.icon }}"
+        data-skill-icon-color="{{ skill.icon_color }}"
+        data-skill-category-label="{{ skill.category_label }}"
+        data-skill-tagline="{{ skill.tagline }}"
+        data-skill-projects='{{ skill.projects | tojson }}'
+        data-skill-concepts='{{ skill.concepts | tojson }}'
+      >
+        <!-- Top Section: Icon, Name, Category & Badge -->
+        <div class="space-y-4">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xl {{ skill.icon_color }} shadow-md group-hover:scale-110 group-hover:border-indigo-500/40 group-hover:bg-indigo-500/10 transition-all duration-300">
+                <i class="{{ skill.icon }}"></i>
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-white text-lg tracking-tight group-hover:text-indigo-300 transition-colors">
+                  {{ skill.name }}
+                </h3>
+                <span class="text-[11px] font-mono text-slate-400">
+                  {{ skill.category_label }}
+                </span>
+              </div>
+            </div>
+            <span class="text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full border {{ skill.badge_color }} shrink-0">
+              {{ skill.badge }}
+            </span>
+          </div>
+
+          <!-- Description Hook / Tagline -->
+          <p class="text-xs text-slate-300/85 leading-relaxed line-clamp-2 min-h-[2.5rem]">
+            {{ skill.tagline }}
+          </p>
+
+          <!-- Animated Glowing Progress Bar Meter -->
+          <div class="space-y-1.5 pt-1">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-mono text-slate-400 text-[11px]">Proficiency Gauge</span>
+              <span class="font-mono font-bold text-cyan-400 text-xs">{{ skill.proficiency }}%</span>
+            </div>
+            <div class="skill-progress-track">
+              <div 
+                class="skill-progress-fill" 
+                data-target="{{ skill.proficiency }}" 
+                style="width: 0%;"
+                role="progressbar" 
+                aria-valuenow="{{ skill.proficiency }}" 
+                aria-valuemin="0" 
+                aria-valuemax="100"
+                aria-label="{{ skill.name }} proficiency meter"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Footer Trigger: View Usage Context -->
+        <div class="pt-5 mt-5 border-t border-white/10 flex items-center justify-between">
+          <button 
+            type="button" 
+            class="skill-detail-trigger w-full py-2 px-3.5 rounded-xl bg-white/5 border border-white/10 text-xs font-medium text-slate-300 flex items-center justify-between group-hover:border-indigo-500/30 cursor-pointer"
+            aria-label="View usage context for {{ skill.name }}"
+          >
+            <span class="flex items-center gap-2">
+              <i class="fa-solid fa-cube text-indigo-400 text-xs"></i>
+              <span>View Usage Context</span>
+            </span>
+            <i class="fa-solid fa-arrow-right text-[10px] text-slate-400 transition-transform"></i>
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </section>
+
+  <!-- ========================================================================
+       4. FEATURED PROJECTS: Dynamic Data-Driven Engineering Showcase (Part 3)
        Interactive category filter navigation, 3-column grid, and glass cards
        ======================================================================== -->
   <section id="projects" class="py-20 px-4 sm:px-8 max-w-7xl mx-auto relative">
@@ -934,6 +1085,90 @@
     </div>
 
   </section>
+
+  <!-- ========================================================================
+       SKILL DEEP-DIVE MODAL (Part 5)
+       Detailed breakdown: Applied Projects, Core Concepts, Proficiency
+       ======================================================================== -->
+  <div id="skill-detail-modal" class="skill-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-skill-name">
+    <div class="skill-modal-box">
+      <!-- Modal Header -->
+      <div class="px-6 py-5 border-b border-white/10 flex items-center justify-between bg-slate-950/80">
+        <div class="flex items-center gap-3.5">
+          <div id="modal-skill-icon-wrapper" class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl shadow-lg">
+            <i id="modal-skill-icon" class="fa-solid fa-code text-cyan-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 id="modal-skill-name" class="font-display font-extrabold text-white text-xl tracking-tight">Technology</h3>
+              <span id="modal-skill-badge" class="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full border bg-indigo-500/10 text-indigo-300 border-indigo-500/30">
+                Advanced
+              </span>
+            </div>
+            <span id="modal-skill-category" class="text-xs font-mono text-slate-400">Category Domain</span>
+          </div>
+        </div>
+        <button id="close-skill-modal-btn" type="button" class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer" aria-label="Close Skill Modal">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 space-y-6">
+        <!-- Tagline / Summary -->
+        <p id="modal-skill-tagline" class="text-sm text-slate-300 leading-relaxed bg-white/5 p-4 rounded-xl border border-white/5">
+          Detailed technical description hook.
+        </p>
+
+        <!-- Proficiency Gauge -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-mono text-slate-300 uppercase tracking-wider text-[11px] font-semibold">Engineering Proficiency</span>
+            <span id="modal-skill-proficiency-text" class="font-mono font-bold text-cyan-400 text-sm">90%</span>
+          </div>
+          <div class="skill-progress-track h-2.5">
+            <div id="modal-skill-progress-fill" class="skill-progress-fill" style="width: 90%;"></div>
+          </div>
+        </div>
+
+        <!-- Applied In Projects -->
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <i class="fa-solid fa-rocket text-indigo-400 text-xs"></i>
+            <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              Applied in Shipped Projects & Architectures
+            </h4>
+          </div>
+          <div id="modal-skill-projects-container" class="flex flex-wrap gap-2">
+            <!-- Dynamically injected project tags -->
+          </div>
+        </div>
+
+        <!-- Core Concepts Mastered -->
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <i class="fa-solid fa-graduation-cap text-cyan-400 text-xs"></i>
+            <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              Core Concepts Mastered & Architectural Scope
+            </h4>
+          </div>
+          <div id="modal-skill-concepts-container" class="flex flex-wrap gap-2">
+            <!-- Dynamically injected concept tags -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 border-t border-white/10 bg-slate-950/70 flex items-center justify-between text-xs">
+        <span class="text-slate-400 flex items-center gap-1.5 font-mono text-[11px]">
+          <i class="fa-solid fa-circle-check text-emerald-400 text-[10px]"></i> Production Tested
+        </span>
+        <button id="modal-skill-close-action-btn" type="button" class="glass-button-secondary px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white cursor-pointer">
+          Dismiss Breakdown
+        </button>
+      </div>
+    </div>
+  </div>
 
 </div>
 {% endblock %}

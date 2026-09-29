@@ -1,13 +1,14 @@
 /**
- * Modular High-End Personal Portfolio - Main Frontend Script (Part 4)
+ * Modular High-End Personal Portfolio - Main Frontend Script (Part 5)
  * Asynchronous Contact API Handling, Interactive CLI Terminal Modal,
- * Category Filtering, Live Clock, Spotlight Engine & UI Utilities.
+ * Skills & Technical Arsenal Engine, Category Filtering, Live Clock & Spotlight.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
   initCliTerminalModal();
   initLiveClock();
+  initSkillsArsenal();
   initProjectCategoryFilter();
   initCopyRepoUrls();
   initCardSpotlightLighting();
@@ -642,6 +643,211 @@ function initSmoothAnchorScroll() {
 }
 
 /**
+ * --------------------------------------------------------------------------
+ * 14. SKILLS & TECHNICAL ARSENAL ENGINE (PART 5)
+ * Scroll-reveal progress meter animations, category tab filtering,
+ * and interactive skill deep-dive modal.
+ * --------------------------------------------------------------------------
+ */
+function initSkillsArsenal() {
+  const skillsSection = document.getElementById("skills");
+  const skillCards = document.querySelectorAll(".skill-card");
+  const filterTabs = document.querySelectorAll(".skill-filter-tab");
+  const modal = document.getElementById("skill-detail-modal");
+  const closeBtn = document.getElementById("close-skill-modal-btn");
+  const closeActionBtn = document.getElementById("modal-skill-close-action-btn");
+
+  if (!skillsSection) return;
+
+  // 1. IntersectionObserver for dynamic scroll-reveal progress meters
+  const progressFills = document.querySelectorAll(".skill-progress-fill[data-target]");
+  if ("IntersectionObserver" in window) {
+    const progressObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const fill = entry.target;
+            const target = fill.getAttribute("data-target") || "0";
+            fill.style.width = `${target}%`;
+            fill.classList.add("animated");
+            observer.unobserve(fill);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px -40px 0px",
+        threshold: 0.1
+      }
+    );
+
+    progressFills.forEach((fill) => progressObserver.observe(fill));
+  } else {
+    // Fallback for browsers without IntersectionObserver
+    progressFills.forEach((fill) => {
+      const target = fill.getAttribute("data-target") || "0";
+      fill.style.width = `${target}%`;
+    });
+  }
+
+  // 2. Category Tab Filtering
+  if (filterTabs.length && skillCards.length) {
+    filterTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const filter = tab.getAttribute("data-skill-filter") || "all";
+
+        // Update active tab styles
+        filterTabs.forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        // Filter skill cards
+        skillCards.forEach((card) => {
+          const category = card.getAttribute("data-category");
+          const shouldShow = filter === "all" || category === filter;
+
+          if (shouldShow) {
+            card.style.display = "";
+            card.classList.remove("project-filter-animate");
+            void card.offsetWidth; // Force DOM reflow for retriggering animation
+            card.classList.add("project-filter-animate");
+
+            // Guarantee progress bar is filled on newly revealed cards
+            const fill = card.querySelector(".skill-progress-fill");
+            if (fill) {
+              const target = fill.getAttribute("data-target") || "0";
+              fill.style.width = `${target}%`;
+            }
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+  }
+
+  // 3. Interactive Skill Deep-Dive Modal
+  if (modal) {
+    const modalIcon = document.getElementById("modal-skill-icon");
+    const modalName = document.getElementById("modal-skill-name");
+    const modalCategory = document.getElementById("modal-skill-category");
+    const modalBadge = document.getElementById("modal-skill-badge");
+    const modalTagline = document.getElementById("modal-skill-tagline");
+    const modalProficiencyText = document.getElementById("modal-skill-proficiency-text");
+    const modalProgressFill = document.getElementById("modal-skill-progress-fill");
+    const modalProjectsContainer = document.getElementById("modal-skill-projects-container");
+    const modalConceptsContainer = document.getElementById("modal-skill-concepts-container");
+
+    const openModal = (card) => {
+      const name = card.getAttribute("data-skill-name") || "Technology";
+      const categoryLabel = card.getAttribute("data-skill-category-label") || "";
+      const badge = card.getAttribute("data-skill-badge") || "Proficient";
+      const badgeColor = card.getAttribute("data-skill-badge-color") || "bg-indigo-500/10 text-indigo-300 border-indigo-500/25";
+      const proficiency = card.getAttribute("data-skill-proficiency") || "80";
+      const icon = card.getAttribute("data-skill-icon") || "fa-solid fa-code";
+      const iconColor = card.getAttribute("data-skill-icon-color") || "text-cyan-400";
+      const tagline = card.getAttribute("data-skill-tagline") || "";
+
+      let projects = [];
+      let concepts = [];
+      try {
+        projects = JSON.parse(card.getAttribute("data-skill-projects") || "[]");
+      } catch (e) {
+        projects = [];
+      }
+      try {
+        concepts = JSON.parse(card.getAttribute("data-skill-concepts") || "[]");
+      } catch (e) {
+        concepts = [];
+      }
+
+      // Populate text & status
+      if (modalName) modalName.textContent = name;
+      if (modalCategory) modalCategory.textContent = categoryLabel;
+      if (modalIcon) modalIcon.className = `${icon} ${iconColor}`;
+      if (modalBadge) {
+        modalBadge.textContent = badge;
+        modalBadge.className = `text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${badgeColor}`;
+      }
+      if (modalTagline) modalTagline.textContent = tagline;
+      if (modalProficiencyText) modalProficiencyText.textContent = `${proficiency}%`;
+      if (modalProgressFill) {
+        modalProgressFill.style.width = "0%";
+        setTimeout(() => {
+          modalProgressFill.style.width = `${proficiency}%`;
+        }, 60);
+      }
+
+      // Populate Projects
+      if (modalProjectsContainer) {
+        modalProjectsContainer.innerHTML = "";
+        if (!projects || projects.length === 0) {
+          modalProjectsContainer.innerHTML = `<span class="text-xs text-slate-400 italic">Foundational engineering skill applied across system components.</span>`;
+        } else {
+          projects.forEach((proj) => {
+            const chip = document.createElement("span");
+            chip.className = "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/10 border border-indigo-500/25 text-xs text-indigo-300 font-medium hover:bg-indigo-500/20 transition-colors";
+            chip.innerHTML = `<i class="fa-solid fa-rocket text-[10px] text-cyan-400"></i><span>${proj}</span>`;
+            modalProjectsContainer.appendChild(chip);
+          });
+        }
+      }
+
+      // Populate Concepts
+      if (modalConceptsContainer) {
+        modalConceptsContainer.innerHTML = "";
+        if (!concepts || concepts.length === 0) {
+          modalConceptsContainer.innerHTML = `<span class="text-xs text-slate-400 italic">Core syntax and runtime architecture standards.</span>`;
+        } else {
+          concepts.forEach((concept) => {
+            const chip = document.createElement("span");
+            chip.className = "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-200 font-mono hover:border-cyan-500/30 transition-colors";
+            chip.innerHTML = `<i class="fa-solid fa-check text-[10px] text-emerald-400"></i><span>${concept}</span>`;
+            modalConceptsContainer.appendChild(chip);
+          });
+        }
+      }
+
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeModal = () => {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+    };
+
+    // Attach click listeners to cards and trigger buttons
+    skillCards.forEach((card) => {
+      const triggerBtn = card.querySelector(".skill-detail-trigger");
+      if (triggerBtn) {
+        triggerBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openModal(card);
+        });
+      }
+      card.addEventListener("click", () => {
+        openModal(card);
+      });
+    });
+
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (closeActionBtn) closeActionBtn.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("open")) {
+        closeModal();
+      }
+    });
+  }
+}
+
+/**
  * Developer console greeting
  */
 function printConsoleBanner() {
@@ -656,6 +862,6 @@ function printConsoleBanner() {
     "border: 1px solid #1e293b"
   ].join(";");
 
-  console.log("%c⚡ Akash N | Glassmorphism Portfolio & Contact API Active.", styles);
+  console.log("%c⚡ Akash N | Glassmorphism Portfolio & Technical Arsenal Active.", styles);
   console.log("%cPress Ctrl + K anywhere to trigger the interactive CLI shell.", "color: #a5b4fc; font-size: 11px;");
 }

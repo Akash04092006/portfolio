@@ -334,6 +334,479 @@ HACKATHONS = [
     }
 ]
 
+# -----------------------------------------------------------------------------
+# SKILLS & TECHNICAL ARSENAL DATA (PART 5)
+# 5 Categorized Domains: Languages, Frameworks, AI/Data, Tools/DevOps, Systems
+# -----------------------------------------------------------------------------
+
+SKILLS = {
+    "languages": [
+        {
+            "id": "c",
+            "name": "C",
+            "category": "languages",
+            "category_label": "Languages",
+            "proficiency": 88,
+            "badge": "Advanced",
+            "badge_color": "bg-sky-500/10 text-sky-300 border-sky-500/25",
+            "icon": "fa-solid fa-c",
+            "icon_color": "text-sky-400",
+            "tagline": "Pointers, dynamic heap allocation, and POSIX concurrency",
+            "projects": ["NexusPulse Buffer Engine", "LPC2148 Peripheral Drivers"],
+            "concepts": ["Memory Layout & Struct Padding", "Pointers & Function Pointers", "Ring Buffers", "POSIX Threads"]
+        },
+        {
+            "id": "cpp",
+            "name": "C++",
+            "category": "languages",
+            "category_label": "Languages",
+            "proficiency": 85,
+            "badge": "Advanced",
+            "badge_color": "bg-blue-500/10 text-blue-300 border-blue-500/25",
+            "icon": "fa-solid fa-code",
+            "icon_color": "text-blue-400",
+            "tagline": "Modern OOP, STL containers, templates, and high-speed algorithms",
+            "projects": ["NexusPulse Ingestion Core", "Graph Algorithms Solver"],
+            "concepts": ["RAII & Smart Pointers", "STL Iterators & Maps", "Templates & Metaprogramming", "Competitive Problem Solving"]
+        },
+        {
+            "id": "python",
+            "name": "Python",
+            "category": "languages",
+            "category_label": "Languages",
+            "proficiency": 95,
+            "badge": "Expert",
+            "badge_color": "bg-emerald-500/10 text-emerald-300 border-emerald-500/25",
+            "icon": "fa-brands fa-python",
+            "icon_color": "text-emerald-400",
+            "tagline": "Backend microservices, asynchronous I/O, ML pipelines & scripting",
+            "projects": ["EchoRoute Navigation Engine", "OmniScribe AI", "AuraPay Gateway"],
+            "concepts": ["Decorators & Generators", "Asyncio Event Loops", "Metaclasses & Typing", "PyTest & Performance Profiling"]
+        },
+        {
+            "id": "java",
+            "name": "Java",
+            "category": "languages",
+            "category_label": "Languages",
+            "proficiency": 82,
+            "badge": "Proficient",
+            "badge_color": "bg-amber-500/10 text-amber-300 border-amber-500/25",
+            "icon": "fa-brands fa-java",
+            "icon_color": "text-amber-400",
+            "tagline": "Enterprise OOP architecture, JVM garbage collection & collections",
+            "projects": ["Distributed Banking Simulator", "Multi-Threaded Queue Service"],
+            "concepts": ["JVM Internals & GC", "Multithreading & Synchronization", "Generics & Collections", "Clean Architecture"]
+        },
+        {
+            "id": "javascript",
+            "name": "JavaScript (ES6+)",
+            "category": "languages",
+            "category_label": "Languages",
+            "proficiency": 90,
+            "badge": "Advanced",
+            "badge_color": "bg-yellow-500/10 text-yellow-300 border-yellow-500/25",
+            "icon": "fa-brands fa-js",
+            "icon_color": "text-yellow-400",
+            "tagline": "Event loops, asynchronous promises, DOM manipulation & modern web",
+            "projects": ["Interactive Portfolio Engine", "DevLens Web Profiler UI"],
+            "concepts": ["Closures & Prototypes", "Async/Await & Promises", "Intersection Observer API", "DOM Render Cycles"]
+        },
+        {
+            "id": "html-css",
+            "name": "HTML5 / CSS3",
+            "category": "languages",
+            "category_label": "Languages",
+            "proficiency": 92,
+            "badge": "Advanced",
+            "badge_color": "bg-orange-500/10 text-orange-300 border-orange-500/25",
+            "icon": "fa-brands fa-html5",
+            "icon_color": "text-orange-400",
+            "tagline": "Semantic layout, accessibility, hardware-accelerated animations & glassmorphism",
+            "projects": ["Modular Portfolio Design", "DevLens Visual Dashboard"],
+            "concepts": ["Semantic HTML5 Elements", "CSS Grid & Flexbox", "Backdrop Filters & Gradients", "WCAG AA Accessibility"]
+        }
+    ],
+
+    "frameworks": [
+        {
+            "id": "flask",
+            "name": "Flask",
+            "category": "frameworks",
+            "category_label": "Frameworks & Web",
+            "proficiency": 94,
+            "badge": "Advanced",
+            "badge_color": "bg-indigo-500/10 text-indigo-300 border-indigo-500/25",
+            "icon": "fa-solid fa-flask",
+            "icon_color": "text-indigo-400",
+            "tagline": "Lightweight WSGI routing, Jinja2 templating, blueprints & serverless Vercel runtime",
+            "projects": ["Portfolio Web Platform", "AuraPay Microservices", "Robofiesta API"],
+            "concepts": ["Application Factories", "Blueprints & Context Globals", "Jinja2 Macro Inheritance", "Vercel Serverless Wrappers"]
+        },
+        {
+            "id": "fastapi",
+            "name": "FastAPI",
+            "category": "frameworks",
+            "category_label": "Frameworks & Web",
+            "proficiency": 90,
+            "badge": "Advanced",
+            "badge_color": "bg-teal-500/10 text-teal-300 border-teal-500/25",
+            "icon": "fa-solid fa-bolt",
+            "icon_color": "text-teal-400",
+            "tagline": "Asynchronous high-throughput REST APIs with automatic OpenAPI & Pydantic typing",
+            "projects": ["EchoRoute Routing Microservice", "OmniScribe Agent Server"],
+            "concepts": ["Pydantic V2 Schemas", "Dependency Injection", "Async/Await Route Handlers", "OpenAPI Generation"]
+        },
+        {
+            "id": "react",
+            "name": "React",
+            "category": "frameworks",
+            "category_label": "Frameworks & Web",
+            "proficiency": 84,
+            "badge": "Proficient",
+            "badge_color": "bg-cyan-500/10 text-cyan-300 border-cyan-500/25",
+            "icon": "fa-brands fa-react",
+            "icon_color": "text-cyan-400",
+            "tagline": "Component lifecycle, functional hooks, state management & reactive rendering",
+            "projects": ["OmniScribe Knowledge Console", "Interactive Map Explorer"],
+            "concepts": ["Custom Hooks & useEffect", "Virtual DOM Reconciliation", "Context API", "Component Modularization"]
+        },
+        {
+            "id": "nodejs",
+            "name": "Node.js",
+            "category": "frameworks",
+            "category_label": "Frameworks & Web",
+            "proficiency": 82,
+            "badge": "Proficient",
+            "badge_color": "bg-emerald-500/10 text-emerald-300 border-emerald-500/25",
+            "icon": "fa-brands fa-node-js",
+            "icon_color": "text-emerald-400",
+            "tagline": "Non-blocking event-driven backend services and package scripting",
+            "projects": ["DevLens Headless Runner", "Live WebSocket Hub"],
+            "concepts": ["Event Loop Tick Phases", "Stream Buffers", "NPM Modules", "Child Processes"]
+        },
+        {
+            "id": "express",
+            "name": "Express",
+            "category": "frameworks",
+            "category_label": "Frameworks & Web",
+            "proficiency": 80,
+            "badge": "Proficient",
+            "badge_color": "bg-slate-400/10 text-slate-300 border-slate-400/25",
+            "icon": "fa-solid fa-server",
+            "icon_color": "text-slate-300",
+            "tagline": "Middleware pipelines, RESTful routing & microservice API gateways",
+            "projects": ["Telemetry Relay Server", "DevLens Mock APIs"],
+            "concepts": ["Middleware Chaining", "Route Parameter Binding", "Error Handling Handlers", "CORS & Security Headers"]
+        },
+        {
+            "id": "tailwind",
+            "name": "Tailwind CSS",
+            "category": "frameworks",
+            "category_label": "Frameworks & Web",
+            "proficiency": 95,
+            "badge": "Expert",
+            "badge_color": "bg-cyan-500/10 text-cyan-300 border-cyan-500/25",
+            "icon": "fa-solid fa-wind",
+            "icon_color": "text-cyan-400",
+            "tagline": "Utility-first modern styling, responsive breakpoints, custom theme config & dark mode",
+            "projects": ["Portfolio Engine", "EchoRoute UI", "DevLens Profiler Dashboard"],
+            "concepts": ["Custom Theme Extensions", "Dark Mode Classes", "Arbitrary Values & Filters", "JIT Engine Optimization"]
+        },
+        {
+            "id": "bootstrap",
+            "name": "Bootstrap",
+            "category": "frameworks",
+            "category_label": "Frameworks & Web",
+            "proficiency": 85,
+            "badge": "Proficient",
+            "badge_color": "bg-purple-500/10 text-purple-300 border-purple-500/25",
+            "icon": "fa-brands fa-bootstrap",
+            "icon_color": "text-purple-400",
+            "tagline": "Rapid prototype UI design, responsive grid systems & accessible components",
+            "projects": ["Robofiesta Admin Console", "Hackathon Rapid Prototype"],
+            "concepts": ["Grid Columns & Breakpoints", "Utility Classes", "Modal Components", "Form Controls"]
+        }
+    ],
+
+    "ai_data": [
+        {
+            "id": "pytorch",
+            "name": "PyTorch",
+            "category": "ai_data",
+            "category_label": "AI & Data Science",
+            "proficiency": 86,
+            "badge": "Advanced",
+            "badge_color": "bg-rose-500/10 text-rose-300 border-rose-500/25",
+            "icon": "fa-solid fa-fire",
+            "icon_color": "text-rose-400",
+            "tagline": "Deep learning tensors, autograd differentiation, custom neural nets & GNN models",
+            "projects": ["EchoRoute Acoustic GNN", "Gaming Addiction ML Predictor"],
+            "concepts": ["Custom nn.Module Layers", "Loss Optimization (AdamW)", "Tensor Board Visualization", "Model Evaluation Matrices"]
+        },
+        {
+            "id": "scikit-learn",
+            "name": "scikit-learn",
+            "category": "ai_data",
+            "category_label": "AI & Data Science",
+            "proficiency": 90,
+            "badge": "Advanced",
+            "badge_color": "bg-orange-500/10 text-orange-300 border-orange-500/25",
+            "icon": "fa-solid fa-brain",
+            "icon_color": "text-orange-400",
+            "tagline": "Supervised & unsupervised ML, regression, clustering & cross-validation",
+            "projects": ["Explainable AI Research Paper", "Agricultural Price Estimator"],
+            "concepts": ["Random Forests & XGBoost", "Pipeline Feature Unions", "GridSearchCV Hyperparameters", "SHAP Feature Attributions"]
+        },
+        {
+            "id": "opencv",
+            "name": "OpenCV",
+            "category": "ai_data",
+            "category_label": "AI & Data Science",
+            "proficiency": 82,
+            "badge": "Proficient",
+            "badge_color": "bg-emerald-500/10 text-emerald-300 border-emerald-500/25",
+            "icon": "fa-solid fa-eye",
+            "icon_color": "text-emerald-400",
+            "tagline": "Computer vision, image filtering, contour detection & frame processing",
+            "projects": ["Warehouse Drone Inventory Counter", "Crop Disease Optical Filter"],
+            "concepts": ["Color Space Transformations", "Edge & Contour Detection", "Morphological Operations", "Haar Cascades"]
+        },
+        {
+            "id": "pandas",
+            "name": "Pandas",
+            "category": "ai_data",
+            "category_label": "AI & Data Science",
+            "proficiency": 92,
+            "badge": "Advanced",
+            "badge_color": "bg-indigo-500/10 text-indigo-300 border-indigo-500/25",
+            "icon": "fa-solid fa-table",
+            "icon_color": "text-indigo-400",
+            "tagline": "DataFrames, time-series aggregations, vector indexing & exploratory analysis",
+            "projects": ["CloudVantage Telemetry Processor", "Research Dataset Analysis"],
+            "concepts": ["Multi-Index GroupBy Operations", "Rolling Window Telemetry", "Vectorized Mapping", "Missing Value Imputation"]
+        },
+        {
+            "id": "numpy",
+            "name": "NumPy",
+            "category": "ai_data",
+            "category_label": "AI & Data Science",
+            "proficiency": 90,
+            "badge": "Advanced",
+            "badge_color": "bg-sky-500/10 text-sky-300 border-sky-500/25",
+            "icon": "fa-solid fa-square-root-variable",
+            "icon_color": "text-sky-400",
+            "tagline": "N-dimensional array computations, linear algebra, Fourier transforms & broadcasting",
+            "projects": ["Acoustic Signal Processing", "Vector Embedding Normalizer"],
+            "concepts": ["Array Broadcasting Rules", "Matrix SVD & Eigenvectors", "Memory Contiguity (C vs Fortran)", "Vectorized Reductions"]
+        },
+        {
+            "id": "langchain",
+            "name": "LangChain",
+            "category": "ai_data",
+            "category_label": "AI & Data Science",
+            "proficiency": 85,
+            "badge": "Advanced",
+            "badge_color": "bg-purple-500/10 text-purple-300 border-purple-500/25",
+            "icon": "fa-solid fa-diagram-project",
+            "icon_color": "text-purple-400",
+            "tagline": "LLM orchestration, autonomous agent chains, hybrid RAG & vector store connectors",
+            "projects": ["OmniScribe AI Platform", "Autonomous Code Review Bot"],
+            "concepts": ["Retrieval-Augmented Generation", "Multi-Agent Reflection Loops", "Qdrant Vector Embeddings", "Custom Tool Binding"]
+        }
+    ],
+
+    "tools_devops": [
+        {
+            "id": "git",
+            "name": "Git",
+            "category": "tools_devops",
+            "category_label": "Tools & DevOps",
+            "proficiency": 92,
+            "badge": "Advanced",
+            "badge_color": "bg-red-500/10 text-red-300 border-red-500/25",
+            "icon": "fa-brands fa-git-alt",
+            "icon_color": "text-red-400",
+            "tagline": "Distributed version control, branch rebasing, cherry-picking & conflict resolution",
+            "projects": ["All Portfolio Projects", "Open Source Contributions"],
+            "concepts": ["Interactive Rebasing", "Git Hooks & Submodules", "Merge Conflict Architecture", "Reflog Recovery"]
+        },
+        {
+            "id": "github",
+            "name": "GitHub",
+            "category": "tools_devops",
+            "category_label": "Tools & DevOps",
+            "proficiency": 94,
+            "badge": "Advanced",
+            "badge_color": "bg-slate-300/10 text-slate-200 border-slate-300/25",
+            "icon": "fa-brands fa-github",
+            "icon_color": "text-slate-200",
+            "tagline": "CI/CD Actions pipelines, issue tracking, releases & pull request reviews",
+            "projects": ["@Akash04092006 Repositories", "Automated Linting Actions"],
+            "concepts": ["GitHub Actions Workflows", "Release Artifacts Packaging", "Branch Protection Rules", "Secrets Management"]
+        },
+        {
+            "id": "vscode",
+            "name": "VS Code",
+            "category": "tools_devops",
+            "category_label": "Tools & DevOps",
+            "proficiency": 95,
+            "badge": "Expert",
+            "badge_color": "bg-blue-500/10 text-blue-300 border-blue-500/25",
+            "icon": "fa-solid fa-code-compare",
+            "icon_color": "text-blue-400",
+            "tagline": "Tailored multi-language workspace, remote SSH debugging & container attachments",
+            "projects": ["Primary IDE for All Software Work"],
+            "concepts": ["Multi-Root Workspaces", "Remote Containers / SSH", "Launch Configs & Debuggers", "Snippet Automation"]
+        },
+        {
+            "id": "docker",
+            "name": "Docker",
+            "category": "tools_devops",
+            "category_label": "Tools & DevOps",
+            "proficiency": 84,
+            "badge": "Proficient",
+            "badge_color": "bg-sky-500/10 text-sky-300 border-sky-500/25",
+            "icon": "fa-brands fa-docker",
+            "icon_color": "text-sky-400",
+            "tagline": "Multi-stage Dockerfiles, compose clusters, volume management & image minimization",
+            "projects": ["NexusPulse Cluster", "AuraPay Microservices"],
+            "concepts": ["Multi-Stage Build Caching", "Docker Compose Networks", "Volume Isolation", "Alpine Minimal Runtimes"]
+        },
+        {
+            "id": "jupyter",
+            "name": "Jupyter",
+            "category": "tools_devops",
+            "category_label": "Tools & DevOps",
+            "proficiency": 90,
+            "badge": "Advanced",
+            "badge_color": "bg-orange-500/10 text-orange-300 border-orange-500/25",
+            "icon": "fa-solid fa-book",
+            "icon_color": "text-orange-400",
+            "tagline": "Interactive data exploration, visualization notebooks & ML prototype experimentation",
+            "projects": ["XAI Research Paper Analysis", "Geospatial Noise Clustering"],
+            "concepts": ["IPython Magic Commands", "Interactive Widget Sliders", "Kernel Memory Management", "Reproducible Data Pipelines"]
+        },
+        {
+            "id": "keil",
+            "name": "Keil uVision",
+            "category": "tools_devops",
+            "category_label": "Tools & DevOps",
+            "proficiency": 80,
+            "badge": "Proficient",
+            "badge_color": "bg-indigo-500/10 text-indigo-300 border-indigo-500/25",
+            "icon": "fa-solid fa-microchip",
+            "icon_color": "text-indigo-400",
+            "tagline": "Embedded ARM compilation, microcontroller simulation, registers & memory maps",
+            "projects": ["LPC2148 Firmware Suite", "UART / Timer Driver"],
+            "concepts": ["ARM7TDMI Architecture", "Peripheral Register Mapping", "In-Circuit Debugging", "Flash Programming"]
+        },
+        {
+            "id": "ollama",
+            "name": "Ollama",
+            "category": "tools_devops",
+            "category_label": "Tools & DevOps",
+            "proficiency": 85,
+            "badge": "Proficient",
+            "badge_color": "bg-emerald-500/10 text-emerald-300 border-emerald-500/25",
+            "icon": "fa-solid fa-laptop-code",
+            "icon_color": "text-emerald-400",
+            "tagline": "Local open-weights LLM deployment (Llama 3, Mistral, Qwen) with quantized inference",
+            "projects": ["OmniScribe Offline Synthesis", "Local Code Reviewer"],
+            "concepts": ["GGUF Quantization (4-bit/8-bit)", "Modelfile Customization", "Context Window Management", "REST Server Integration"]
+        },
+        {
+            "id": "vercel",
+            "name": "Vercel",
+            "category": "tools_devops",
+            "category_label": "Tools & DevOps",
+            "proficiency": 92,
+            "badge": "Advanced",
+            "badge_color": "bg-slate-200/10 text-slate-100 border-slate-200/25",
+            "icon": "fa-solid fa-triangle-circle-square",
+            "icon_color": "text-slate-100",
+            "tagline": "Serverless edge functions, Python builders, instant CI/CD preview deployments & routing",
+            "projects": ["Personal Portfolio Web App", "EchoRoute Live Deployment"],
+            "concepts": ["vercel.json Route Rewrites", "Python Serverless Runtimes", "Edge Caching Headers", "Environment Secrets"]
+        }
+    ],
+
+    "systems_embedded": [
+        {
+            "id": "arm-assembly",
+            "name": "ARM Assembly",
+            "category": "systems_embedded",
+            "category_label": "Systems & Embedded",
+            "proficiency": 78,
+            "badge": "Intermediate",
+            "badge_color": "bg-amber-500/10 text-amber-300 border-amber-500/25",
+            "icon": "fa-solid fa-microchip",
+            "icon_color": "text-amber-400",
+            "tagline": "Instruction sets, conditional execution, stack frames & register allocation",
+            "projects": ["LPC2148 Bootloader Routine", "Hardware Delay Loop Assembly"],
+            "concepts": ["Thumb vs ARM Mode", "Branch with Link (BL)", "Stack Pointer (SP) Alignment", "Status Register (CPSR) Flags"]
+        },
+        {
+            "id": "lpc2148",
+            "name": "LPC2148 Microcontrollers",
+            "category": "systems_embedded",
+            "category_label": "Systems & Embedded",
+            "proficiency": 80,
+            "badge": "Proficient",
+            "badge_color": "bg-sky-500/10 text-sky-300 border-sky-500/25",
+            "icon": "fa-solid fa-memory",
+            "icon_color": "text-sky-400",
+            "tagline": "ARM7TDMI-S architecture, GPIO, UART, Timer/Counters, PWM, ADC & DAC interfaces",
+            "projects": ["Robofiesta Sensor Hub", "Telemetry Data Logger"],
+            "concepts": ["Pin Connect Block Configuration", "UART Baud Rate Calculations", "Vectored Interrupt Controller (VIC)", "ADC Analog Polling"]
+        },
+        {
+            "id": "operating-systems",
+            "name": "Operating Systems",
+            "category": "systems_embedded",
+            "category_label": "Systems & Embedded",
+            "proficiency": 88,
+            "badge": "Advanced",
+            "badge_color": "bg-indigo-500/10 text-indigo-300 border-indigo-500/25",
+            "icon": "fa-solid fa-hard-drive",
+            "icon_color": "text-indigo-400",
+            "tagline": "Process scheduling, virtual memory, paging, concurrency, deadlocks & file systems",
+            "projects": ["Custom Thread Pool & Scheduler", "Multi-Process Pipeline"],
+            "concepts": ["Context Switching Overhead", "Page Replacement Algorithms", "Mutexes & Semaphores", "Inode Disk Structures"]
+        },
+        {
+            "id": "computer-networks",
+            "name": "Computer Networks",
+            "category": "systems_embedded",
+            "category_label": "Systems & Embedded",
+            "proficiency": 85,
+            "badge": "Advanced",
+            "badge_color": "bg-emerald-500/10 text-emerald-300 border-emerald-500/25",
+            "icon": "fa-solid fa-network-wired",
+            "icon_color": "text-emerald-400",
+            "tagline": "OSI 7-layer model, TCP/IP, WebSockets, DNS, routing algorithms & network security",
+            "projects": ["Decentralized Emergency Mesh", "Real-Time Telemetry Stream"],
+            "concepts": ["TCP 3-Way Handshake & Congestion", "DNS Resolution Protocols", "WebSocket Duplex Frames", "TLS Cryptographic Handshake"]
+        },
+        {
+            "id": "dsa",
+            "name": "Data Structures & Algorithms",
+            "category": "systems_embedded",
+            "category_label": "Systems & Embedded",
+            "proficiency": 92,
+            "badge": "Advanced",
+            "badge_color": "bg-rose-500/10 text-rose-300 border-rose-500/25",
+            "icon": "fa-solid fa-diagram-next",
+            "icon_color": "text-rose-400",
+            "tagline": "Graphs, dynamic programming, trees, amortized analysis & algorithmic optimization",
+            "projects": ["EchoRoute Dijkstra / A* Routing", "NexusPulse Ring Buffer"],
+            "concepts": ["Dijkstra & A* Pathfinding", "Dynamic Programming Memoization", "Segment & Trie Trees", "Amortized Big-O Bounds"]
+        }
+    ]
+}
+
+# Flattened list for seamless iteration and global lookups
+ALL_SKILLS = [skill for group in SKILLS.values() for skill in group]
+
 # In-memory storage for logged contact submissions
 CONTACT_INQUIRIES = []
 
@@ -348,6 +821,8 @@ def index():
         "index.html",
         personal_info=PERSONAL_INFO,
         lifestyle_cards=LIFESTYLE_CARDS,
+        skills=SKILLS,
+        all_skills=ALL_SKILLS,
         projects=PROJECTS,
         hackathons=HACKATHONS,
         current_year=datetime.now().year
