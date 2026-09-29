@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}500 - Internal Anomaly | {{ personal_info.name }}{% endblock %}
+
+{% block content %}
+<div class="min-h-[70vh] flex items-center justify-center px-4 py-20 max-w-4xl mx-auto">
+  <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-rose-500/20 text-center space-y-6 max-w-xl mx-auto relative overflow-hidden">
+    
+    <!-- Background Glow -->
+    <div class="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-rose-500/15 blur-3xl pointer-events-none"></div>
+
+    <div class="w-16 h-16 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 mx-auto flex items-center justify-center text-2xl">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+    </div>
+
+    <div class="space-y-2">
+      <span class="text-xs font-mono uppercase tracking-widest text-rose-400">Error 500</span>
+      <h1 class="text-3xl sm:text-4xl font-display font-extrabold text-white">
+        System Anomaly Encountered
+      </h1>
+      <p class="text-sm sm:text-base text-slate-400 max-w-md mx-auto pt-2">
+        {{ error_message|default("A temporary disturbance occurred within the backend service. Self-healing protocols are active.") }}
+      </p>
+    </div>
+
+    <div class="pt-4 flex flex-wrap items-center justify-center gap-4">
+      <a href="{{ url_for('index') }}" class="glass-button-primary px-6 py-3 rounded-xl text-sm font-semibold text-white inline-flex items-center gap-2">
+        <i class="fa-solid fa-arrow-rotate-left text-xs"></i>
+        <span>Reload Base Station</span>
+      </a>
+      <a href="mailto:{{ personal_info.email }}" class="glass-button-secondary px-5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:text-white inline-flex items-center gap-2">
+        <i class="fa-regular fa-envelope text-xs"></i>
+        <span>Contact Engineer</span>
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

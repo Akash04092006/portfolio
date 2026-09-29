@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>{% block title %}{{ personal_info.name }} | {{ personal_info.role }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ personal_info.name }} - {{ personal_info.role }}. {{ personal_info.tagline }}{% endblock %}">
+  <meta name="keywords" content="Portfolio, Full-Stack Developer, Software Engineer, Python, Flask, Tailwind CSS, AI Systems, Distributed Systems, Bengaluru">
+  <meta name="author" content="{{ personal_info.name }}">
+  <meta name="theme-color" content="#07090e">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ personal_info.name }} | {{ personal_info.role }}">
+  <meta property="og:description" content="{{ personal_info.tagline }}">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80">
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6.5.1 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            },
+            surface: {
+              dark: '#07090e',
+              card: '#0e1526',
+              border: 'rgba(255, 255, 255, 0.08)',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Glassmorphism Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-[#07090e] text-slate-100 antialiased selection:bg-indigo-500 selection:text-white flex flex-col min-h-screen">
+
+  <!-- Dark Mesh Gradient Background Overlays -->
+  <div class="mesh-gradient-container" aria-hidden="true">
+    <div class="mesh-sphere mesh-sphere-1"></div>
+    <div class="mesh-sphere mesh-sphere-2"></div>
+    <div class="mesh-sphere mesh-sphere-3"></div>
+    <div class="mesh-grid-pattern"></div>
+  </div>
+
+  <!-- Glassmorphism Main Navigation -->
+  <header class="sticky top-0 z-50 w-full">
+    <nav id="main-nav" class="glass-nav w-full py-3.5 px-4 sm:px-8">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        
+        <!-- Logo / Brand Identity -->
+        <a href="{{ url_for('index') }}" class="group flex items-center gap-3 focus:outline-none" aria-label="Home">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 p-[1px] shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all duration-300">
+            <div class="w-full h-full bg-[#0b0f19] rounded-xl flex items-center justify-center">
+              <span class="font-display font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-cyan-300 text-lg tracking-wider">A</span>
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-display font-bold text-white text-base tracking-tight group-hover:text-indigo-300 transition-colors">
+              {{ personal_info.name }}
+            </span>
+            <span class="text-xs text-slate-400 tracking-wide font-medium flex items-center gap-1.5">
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-beacon"></span>
+              {{ personal_info.status_indicator }}
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <div class="hidden md:flex items-center gap-1 lg:gap-2">
+          <a href="#about" class="nav-link px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">About</a>
+          <a href="#lifestyle" class="nav-link px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">Interests</a>
+          <a href="#projects" class="nav-link px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">Projects</a>
+          <a href="#hackathons" class="nav-link px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">Hackathons</a>
+          <a href="#contact" class="nav-link px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">Contact</a>
+        </div>
+
+        <!-- Desktop Action Buttons & Social Icons -->
+        <div class="hidden md:flex items-center gap-3">
+          <!-- Social Icons -->
+          <div class="flex items-center gap-1 border-r border-slate-700/60 pr-3">
+            <a href="{{ personal_info.social.github }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-colors" title="GitHub" aria-label="GitHub Profile">
+              <i class="fa-brands fa-github text-base"></i>
+            </a>
+            <a href="{{ personal_info.social.linkedin }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:bg-white/5 transition-colors" title="LinkedIn" aria-label="LinkedIn Profile">
+              <i class="fa-brands fa-linkedin text-base"></i>
+            </a>
+            <a href="{{ personal_info.social.instagram }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-pink-400 hover:bg-white/5 transition-colors" title="Instagram" aria-label="Instagram Profile">
+              <i class="fa-brands fa-instagram text-base"></i>
+            </a>
+          </div>
+
+          <!-- Quick Connect Button -->
+          <a href="#contact" class="glass-button-primary px-4 py-2 rounded-xl text-xs font-semibold text-white inline-flex items-center gap-2 cursor-pointer">
+            <span>Get in Touch</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Trigger -->
+        <div class="flex items-center gap-2 md:hidden">
+          <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-label="Toggle Navigation Menu" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-colors">
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-menu" class="hidden md:hidden pt-4 pb-3 border-t border-white/10 mt-3 animate-fadeIn">
+        <div class="flex flex-col gap-2">
+          <a href="#about" class="mobile-nav-link px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors">About</a>
+          <a href="#lifestyle" class="mobile-nav-link px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors">Interests</a>
+          <a href="#projects" class="mobile-nav-link px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors">Projects</a>
+          <a href="#hackathons" class="mobile-nav-link px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors">Hackathons</a>
+          <a href="#contact" class="mobile-nav-link px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors">Contact</a>
+        </div>
+        <div class="pt-3 mt-3 border-t border-white/10 flex items-center justify-between px-2">
+          <div class="flex items-center gap-2">
+            <a href="{{ personal_info.social.github }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-slate-300 hover:text-white" aria-label="GitHub">
+              <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="{{ personal_info.social.linkedin }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-slate-300 hover:text-indigo-400" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="{{ personal_info.social.instagram }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-slate-300 hover:text-pink-400" aria-label="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          </div>
+          <button data-email="{{ personal_info.email }}" class="copy-email-btn text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1.5 rounded-lg font-medium">
+            <i class="fa-regular fa-copy mr-1"></i> Copy Email
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main View Block -->
+  <main class="relative z-10 flex-grow">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- High-End Glassmorphic Footer -->
+  <footer class="relative z-10 mt-24 border-t border-white/10 bg-slate-950/60 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 py-12 md:py-16">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        
+        <!-- Col 1: Identity & Bio -->
+        <div class="md:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 p-[1px]">
+              <div class="w-full h-full bg-[#0b0f19] rounded-xl flex items-center justify-center font-display font-bold text-white text-base">
+                A
+              </div>
+            </div>
+            <span class="font-display font-bold text-lg text-white">{{ personal_info.name }}</span>
+          </div>
+          <p class="text-sm text-slate-400 max-w-md leading-relaxed">
+            {{ personal_info.short_bio }}
+          </p>
+          <div class="flex items-center gap-2 text-xs text-slate-400 font-medium">
+            <i class="fa-solid fa-location-dot text-indigo-400"></i>
+            <span>{{ personal_info.location }}</span>
+            <span class="text-slate-600">•</span>
+            <span class="text-emerald-400 font-medium">{{ personal_info.availability }}</span>
+          </div>
+        </div>
+
+        <!-- Col 2: Navigation -->
+        <div>
+          <h4 class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-4">Architecture</h4>
+          <ul class="space-y-2.5 text-sm text-slate-400">
+            <li><a href="#about" class="hover:text-indigo-400 transition-colors">About & Bio</a></li>
+            <li><a href="#lifestyle" class="hover:text-indigo-400 transition-colors">Lifestyle & Discipline</a></li>
+            <li><a href="#projects" class="hover:text-indigo-400 transition-colors">Featured Engineering</a></li>
+            <li><a href="#hackathons" class="hover:text-indigo-400 transition-colors">Hackathons & Awards</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Direct Connect -->
+        <div>
+          <h4 class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-4">Connect</h4>
+          <ul class="space-y-2.5 text-sm text-slate-400">
+            <li>
+              <a href="mailto:{{ personal_info.email }}" class="hover:text-white transition-colors flex items-center gap-2">
+                <i class="fa-regular fa-envelope text-indigo-400 text-xs"></i>
+                <span class="truncate">{{ personal_info.email }}</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ personal_info.social.github }}" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-2">
+                <i class="fa-brands fa-github text-slate-400 text-xs"></i>
+                <span>GitHub Profile</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ personal_info.social.linkedin }}" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-2">
+                <i class="fa-brands fa-linkedin text-indigo-400 text-xs"></i>
+                <span>LinkedIn Network</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ personal_info.social.instagram }}" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-2">
+                <i class="fa-brands fa-instagram text-pink-400 text-xs"></i>
+                <span>Instagram Feed</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>© {{ current_year }} {{ personal_info.name }}. Built with Python (Flask) & Tailwind CSS. Ready for Vercel Serverless.</p>
+        <div class="flex items-center gap-6">
+          <span class="inline-flex items-center gap-1.5 text-slate-400">
+            <i class="fa-solid fa-bolt text-amber-400"></i> Part 1 Modular Setup
+          </span>
+          <a href="#main-nav" class="hover:text-slate-300 transition-colors">Back to Top ↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Back-to-Top Button -->
+  <button id="back-to-top" type="button" aria-label="Scroll back to top" class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-xl glass-button-secondary text-slate-300 hover:text-white flex items-center justify-center opacity-0 pointer-events-none translate-y-4 transition-all duration-300 shadow-xl">
+    <i class="fa-solid fa-arrow-up text-sm"></i>
+  </button>
+
+  <!-- Interactive Toast Notification -->
+  <div id="clipboard-toast" class="toast-notice hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 glass-panel px-5 py-3 rounded-2xl flex items-center gap-3 border border-indigo-500/30 text-slate-100 shadow-2xl">
+    <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <span id="toast-message" class="text-xs sm:text-sm font-medium">Notification message</span>
+  </div>
+
+  <!-- Global Application Scripts -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
